@@ -1,0 +1,32 @@
+{
+    "extends": ["prettier"],
+    "plugins": ["prettier"],
+    "rules": {
+      "prettier/prettier": ["error"]
+    },
+    "env": {
+      "node": true
+    },
+    "overrides": [
+      {
+        "files": ["backend/**"],
+        "extends": ["eslint:recommended", "prettier", "plugin:node/recommended"],
+        "env": {
+          "es6": true
+        },
+        "parserOptions": {
+          "ecmaVersion": 2020
+        }
+      },
+      {
+        "files": ["frontend/**"],
+        "extends": [
+          "plugin:vue/recommended",
+          "eslint:recommended",
+          "prettier/vue",
+          "plugin:prettier/recommended"
+        ]
+      }
+    ]
+  }
+  
