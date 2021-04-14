@@ -1,12 +1,12 @@
 {
-  "name": "frontend",
+  "name": "lemac-backend",
   "version": "0.0.0",
   "description": "Hs project for lemac meant to control and keep track of the lab's usage",
-  "private": true,
+  "main": "src/index.js",
   "scripts": {
-    "format": "prettier \"**/*.{js,vue}\" --write",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,10 @@
     "url": "https://github.com/HackerSchool/lemac-project/issues"
   },
   "homepage": "https://github.com/HackerSchool/lemac-project#readme",
-  "dependencies": {
-    "@vue/cli": "^4.5.12"
-  },
   "devDependencies": {
-    "eslint": "^7.23.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-vue": "^7.8.0",
-    "prettier": "2.2.1"
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
