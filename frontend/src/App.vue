@@ -1,6 +1,7 @@
 <template>
   <v-app id="app" style="width: 100%; height: 100%">
     <v-main>
+      <notifications />
       <router-view></router-view>
     </v-main>
   </v-app>
