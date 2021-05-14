@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './plugins/router';
-import store from './store';
+import store from './plugins/store';
 import vuetify from './plugins/vuetify';
 import './plugins/notifications';
 
