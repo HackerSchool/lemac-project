@@ -5,7 +5,7 @@ const express = require('express');
 const { dbMiddleware } = require('./middleware/database');
 const { errorHandler } = require('./middleware/requestHandler');
 
-port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 const app = express();
 
