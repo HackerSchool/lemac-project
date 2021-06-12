@@ -35,4 +35,20 @@ module.exports = {
       return;
     }
   },
+
+  /* get request to fenix api to get the user id */
+  returnIstId: async (access_token) => {
+    try {
+      const person = await axios.get(`${FENIX_BASE_URL}api/fenix/v1/person`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(person);
+      return person.username;
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  },
 };
