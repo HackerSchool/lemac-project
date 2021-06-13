@@ -8,6 +8,8 @@ const { errorHandler } = require('./middleware/requestHandler');
 const port = process.env.PORT || 5000;
 
 const app = express();
+const api = require('./api');
+api.init(app);
 
 app.use(dbMiddleware);
 app.use(errorHandler);
