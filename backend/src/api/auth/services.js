@@ -1,7 +1,5 @@
-//const { default: user } = require('@/store/user.js'); isto criou-me isto não sei porquê????
 const axios = require('axios');
 const { sign } = require('jsonwebtoken');
-const db = require('../../middleware/database.js');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'placeholder';
 
@@ -54,61 +52,19 @@ module.exports = {
     }
   },
 
-  /* checks db for istid and returns the user info NÃO SEI SE ISTO ESTÁ BEM PORQUE AINDA NÃO PERCEBI BEM SE O RESULt DÁ O QUE EU QUERO*/
-  getUser: async (istId) => {
-    var user;
-
+  /* checks db for istid and returns the user info*/
+  getUser: async (istId, database) => {
     try {
-      db.connect((err) => {
+      database.query('SELECT * FROM users WHERE ist_id=?', [istId], (err, results) => {
         if (err) throw err;
-        db.query(
-          `SELECT EXISTS(SELECT 1 FROM lemac_test.users WHERE ist_id = '${istId}')`,
-          // eslint-disable-next-line no-unused-vars
-          (err, result, fields) => {
-            if (err) throw err;
-
-            var dbname;
-            var dbactive;
-            var dbadmin;
-
-            if (result == 1) {
-              db.query(
-                `SELECT name FROM lemac_test.users WHERE ist_id = '${istId}'`,
-                // eslint-disable-next-line no-unused-vars
-                (err, rows, fields) => {
-                  if (err) throw err;
-
-                  dbname = rows;
-                }
-              );
-
-              db.query(
-                `SELECT ative FROM lemac_test.users WHERE ist_id = '${istId}'`,
-                // eslint-disable-next-line no-unused-vars
-                (err, rows, fields) => {
-                  if (err) throw err;
-
-                  dbactive = rows;
-                }
-              );
-
-              db.query(
-                `SELECT admin FROM lemac_test.users WHERE ist_id = '${istId}'`,
-                // eslint-disable-next-line no-unused-vars
-                (err, rows, fields) => {
-                  if (err) throw err;
-
-                  dbadmin = rows;
-                }
-              );
-
-              user = { name: `${dbname}`, active: `${dbactive}`, admin: `${dbadmin}` };
-            }
-          }
-        );
+        if (results.length === 0) {
+          return;
+        } else {
+          const user = results[0];
+          console.log(user);
+          return user;
+        }
       });
-
-      return user;
     } catch (e) {
       console.error(e);
       return;
