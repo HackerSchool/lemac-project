@@ -1,7 +1,7 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-const dbMiddleware = (req, _res, next) => {
-  const db = mysql.createConnection({
+const dbMiddleware = async (req, _res, next) => {
+  const db = await mysql.createConnection({
     host: process.env.DB_HOST || '127.0.0.1',
     port: process.env.DB_PORT || 3306,
     user: process.env.DB_USERNAME || 'root',
@@ -9,7 +9,7 @@ const dbMiddleware = (req, _res, next) => {
     database: process.env.DB_NAME || '',
   });
 
-  db.connect((err) => {
+  await db.connect((err) => {
     if (err) throw err;
   });
   req.db = db;
