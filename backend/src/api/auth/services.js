@@ -10,16 +10,16 @@ const FENIX_REDIRECT_URL = process.env.FENIX_REDIRECT_URL || '';
 
 module.exports = {
   /* createJWT creates the JWT from the user data to send to frontend*/
-  createJWT: ({ user_id, ist_id, name, active, admin }) => {
-    const data = { user_id, ist_id, name, active, admin };
-    const token = sign(JWT_SECRET, data, { expiresIn: 60 * 60 * 24 * 7 });
+  createJWT: ({ id, istId, name, active, admin }) => {
+    const data = { id, istId, name, active, admin };
+    const token = sign(data, JWT_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
     return token;
   },
 
   /* post request to Fenix API to authenticate the code from the frontend*/
   loginFenix: async (code) => {
     try {
-      const response = axios.post(
+      const { data: response } = await axios.post(
         `${FENIX_BASE_URL}oauth/access_token?client_id=${encodeURIComponent(
           FENIX_CLIENT_ID
         )}&client_secret=${encodeURIComponent(
@@ -28,7 +28,6 @@ module.exports = {
           code
         )}&grant_type=authorization_code`
       );
-      console.log(response);
       return response.access_token;
     } catch (e) {
       console.error(e);
@@ -39,12 +38,11 @@ module.exports = {
   /* get request to fenix api to get the user id */
   returnIstId: async (access_token) => {
     try {
-      const person = await axios.get(`${FENIX_BASE_URL}api/fenix/v1/person`, {
+      const { data: person } = await axios.get(`${FENIX_BASE_URL}api/fenix/v1/person`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(person);
       return person.username;
     } catch (e) {
       console.error(e);
@@ -55,16 +53,20 @@ module.exports = {
   /* checks db for istid and returns the user info*/
   getUser: async (istId, database) => {
     try {
-      database.query('SELECT * FROM users WHERE ist_id=?', [istId], (err, results) => {
-        if (err) throw err;
-        if (results.length === 0) {
-          return;
-        } else {
-          const user = results[0];
-          console.log(user);
-          return user;
-        }
-      });
+      const [results] = await database.execute('SELECT * FROM users WHERE ist_id=?', [istId]);
+      if (results.length === 0) {
+        return;
+      } else {
+        //estruturação em baixo do user object para mudar a conveção das variaveis e ter a certeza que se encontra bem estruturado
+        const user = {
+          id: results[0].user_id,
+          istId: results[0].ist_id,
+          name: results[0].name,
+          active: results[0].active,
+          admin: results[0].admin,
+        };
+        return user;
+      }
     } catch (e) {
       console.error(e);
       return;
