@@ -8,12 +8,8 @@ module.exports = {
     const istId = await services.returnIstId(accessToken);
     if (!istId) return {};
 
-    const user = await services.getUser(istId);
+    const user = await services.getUser(istId, database);
     if (!user) return {};
-
-    /*
-    Missing database query that must check if the member exists and return the information, and build an object user with the information to be returned. done???
-    */
 
     const jwt = services.createJWT(user);
 
