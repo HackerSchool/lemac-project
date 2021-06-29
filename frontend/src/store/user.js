@@ -1,9 +1,9 @@
 const state = {
-  userId: '',
+  id: null,
   istId: '',
   name: '',
-  active: '',
-  admin: '',
+  active: null,
+  admin: null,
 };
 
 const getters = {};
@@ -19,7 +19,6 @@ const actions = {
 
 const mutations = {
   SET_USER(state, data) {
-    //needs testing
     Object.assign(state, data);
   },
   UNSET_USER(state) {
