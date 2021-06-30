@@ -6,7 +6,9 @@ const state = {
   admin: null,
 };
 
-const getters = {};
+const getters = {
+  getId: (state) => state.id,
+};
 
 const actions = {
   loginUser({ commit }, data) {
