@@ -2,26 +2,26 @@
   <v-app-bar app dense>
     <h2 class="primary--text mx-3">LEMAC</h2>
     <v-spacer />
-    <div v-if="!this.getId">
+    <div v-if="!getId">
       <v-btn
-        @click="$emit('login')"
         class="primary mx-3"
         :loading="loading"
         :disabled="loading"
         elevation="2"
         small
+        @click="$emit('login')"
       >
         Login
       </v-btn>
     </div>
     <div v-else>
       <v-btn
-        @click="$emit('logout')"
         class="error mx-3"
         :loading="loadingOut"
         :disabled="loadingOut"
         elevation="2"
         small
+        @click="$emit('logout')"
       >
         Logout
       </v-btn>
@@ -33,7 +33,10 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'HomeHeader',
-  props: ['loading', 'loadingOut'],
+  props: {
+    loading: Boolean,
+    loadingOut: Boolean,
+  },
   computed: {
     ...mapGetters('user', ['getId']),
   },

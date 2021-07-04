@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HomeHeader @login="login" @logout="logout" :loading="loading" :loadingOut="loadingOut" />
+    <HomeHeader :loading="loading" :loading-out="false" @login="login" @logout="logout" />
   </div>
 </template>
 
@@ -10,13 +10,13 @@ import apiLogin from '@/api/auth.api';
 import { mapActions } from 'vuex';
 export default {
   name: 'Home',
+  components: {
+    HomeHeader,
+  },
   data: () => ({
     loading: false,
     loadingOut: false,
   }),
-  components: {
-    HomeHeader,
-  },
   mounted() {
     const fenixCode = this.$route.query.code;
     if (fenixCode) this.authBackend(fenixCode);
@@ -56,7 +56,7 @@ export default {
         });
       }
       this.loading = false;
-      this.$router.push('/');
+      this.$router.push('login');
     },
     logout() {
       this.loadingOut = true;
