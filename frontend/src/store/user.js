@@ -1,12 +1,14 @@
 const state = {
-  userId: '',
+  id: null,
   istId: '',
   name: '',
-  active: '',
-  admin: '',
+  active: null,
+  admin: null,
 };
 
-const getters = {};
+const getters = {
+  getId: (state) => state.id,
+};
 
 const actions = {
   loginUser({ commit }, data) {
@@ -19,7 +21,6 @@ const actions = {
 
 const mutations = {
   SET_USER(state, data) {
-    //needs testing
     Object.assign(state, data);
   },
   UNSET_USER(state) {
