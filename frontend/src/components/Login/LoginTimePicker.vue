@@ -19,6 +19,8 @@
             label="Entry Hours"
             prepend-icon="mdi-clock-time-four-outline"
             readonly
+            required
+            :rules="[() => !!timeStart || 'This field is required']"
             v-bind="attrs"
             v-on="on"
           ></v-text-field>
@@ -51,6 +53,8 @@
             label="Exit Hours"
             prepend-icon="mdi-clock-time-four-outline"
             readonly
+            required
+            :rules="[() => !!timeEnd || 'This field is required']"
             v-bind="attrs"
             v-on="on"
           ></v-text-field>

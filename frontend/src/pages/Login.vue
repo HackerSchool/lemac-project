@@ -14,7 +14,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn color="success" text>Skip</v-btn>
-        <v-btn color="secondary" text>Save</v-btn>
+        <v-btn color="secondary" text :disabled="disabled" @click="saveTime">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -27,12 +27,30 @@ export default {
   components: {
     LoginTimePicker,
   },
+  data() {
+    return {
+      start: '',
+      end: '',
+    };
+  },
+  computed: {
+    disabled() {
+      return this.start && this.end ? false : true;
+    },
+  },
   methods: {
     setStart(value) {
-      console.log(value);
+      this.start = value;
     },
     setEnd(value) {
-      console.log(value);
+      this.end = value;
+    },
+    saveTime() {
+      const now = new Date().toJSON();
+      const entry = now.slice(0, 11) + this.start + ':000Z';
+      const exit = now.slice(0, 11) + this.end + ':000Z';
+      console.log(entry);
+      console.log(exit);
     },
   },
 };
