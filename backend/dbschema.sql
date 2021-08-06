@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `log_hours` (
   `user_id` int,
   `entry` datetime,
   `exit` datetime,
-    `time` int
+  `time` int,
   
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 );
