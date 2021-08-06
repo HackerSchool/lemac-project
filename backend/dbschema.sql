@@ -13,8 +13,16 @@ CREATE TABLE IF NOT EXISTS `log_hours` (
   `user_id` int,
   `entry` datetime,
   `exit` datetime,
+    `time` int
   
   FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+);
+
+CREATE TABLE `workstations` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255),
+  `state` bool DEFAULT false,
+  `type` ENUM ('active', 'disabled', 'remote')
 );
 
 COMMIT;
