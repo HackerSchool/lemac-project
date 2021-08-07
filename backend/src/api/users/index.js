@@ -20,4 +20,21 @@ module.exports = {
     }
     res.sendStatus(400);
   },
+  getUsers: async (req, res) => {
+    //auth check
+    // if (!req.user) {
+    //   res.sendStatus(401);
+    //   return;
+    // }
+    const data = await controller.getUsers(req.db);
+    if (data.length === 0) {
+      //no users in db
+      res.sendStatus(204);
+    } else if (data.length > 0) {
+      res.json(data);
+    } else {
+      //bad request
+      res.sendStatus(400);
+    }
+  },
 };

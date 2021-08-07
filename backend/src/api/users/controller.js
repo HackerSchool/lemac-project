@@ -15,4 +15,13 @@ module.exports = {
       return e.code;
     }
   },
+  getUsers: async (database) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM users');
+      return results;
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  },
 };
