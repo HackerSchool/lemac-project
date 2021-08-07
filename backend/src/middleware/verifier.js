@@ -13,7 +13,7 @@ const verifyMiddleware = async (req, res, next) => {
   //uses jwt to verify if the token is valid
   const token = header[1];
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (!err) req.user = user;
+    if (!err && user.active) req.user = user;
     next();
   });
 };
