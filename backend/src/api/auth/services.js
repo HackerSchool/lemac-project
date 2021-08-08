@@ -54,6 +54,7 @@ module.exports = {
   getUser: async (istId, database) => {
     try {
       const [results] = await database.execute('SELECT * FROM users WHERE ist_id=?', [istId]);
+      database.end();
       if (results.length === 0) {
         return;
       } else {
