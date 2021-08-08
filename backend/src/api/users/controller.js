@@ -41,4 +41,15 @@ module.exports = {
       return e.code;
     }
   },
+
+  deleteUser: async (database, userId) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM users WHERE user_id = ?', [userId]);
+      if (results.length === 0) return false;
+      await database.execute('DELETE FROM users WHERE user_id = ?', [userId]);
+      return true;
+    } catch (e) {
+      console.error(e);
+    }
+  },
 };
