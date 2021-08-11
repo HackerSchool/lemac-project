@@ -3,10 +3,10 @@ const controller = require('./controller');
 module.exports = {
   addUser: async (req, res) => {
     //verifies if the user exists to make sure its authorized to do the operation
-    // if (!req.user || !req.user.admin) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
 
     //if the request body has proper structure inserts it db
     if (req.body && req.body.istId && req.body.istId.match(/^ist\d+$/) && req.body.name) {
@@ -23,10 +23,10 @@ module.exports = {
 
   getUsers: async (req, res) => {
     //auth check
-    // if (!req.user && !req.user.admin) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
 
     const data = await controller.getUsers(req.db);
     if (data.length === 0) {
@@ -43,10 +43,10 @@ module.exports = {
   },
 
   updateUser: async (req, res) => {
-    // if (!req.user && !req.user.admin) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
     if (req.body && req.body.istId && req.body.istId.match(/^ist\d+$/) && req.body.name) {
       const data = await controller.updateUser(req.db, req.params.id, req.body);
       //duplicated entry
@@ -66,10 +66,10 @@ module.exports = {
   },
 
   deleteUser: async (req, res) => {
-    // if (!req.user && !req.user.admin) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
     try {
       const conf = await controller.deleteUser(req.db, req.params.id);
       if (conf) {
