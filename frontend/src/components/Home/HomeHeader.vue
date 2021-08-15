@@ -15,6 +15,14 @@
       </v-btn>
     </div>
     <div v-else>
+      <v-tooltip bottom>
+        <template #activator="{ on, attrs }">
+          <v-icon v-bind="attrs" @click="$router.push('dashboard')" v-on="on">
+            mdi-view-dashboard
+          </v-icon>
+        </template>
+        Admin Dashboard
+      </v-tooltip>
       <v-btn
         class="error mx-3"
         :loading="loadingOut"

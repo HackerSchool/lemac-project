@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import Home from '@/pages/Home.vue';
 import Login from '@/pages/Login.vue';
 import NotFoundPage from '@/pages/404.vue';
+import Dashboard from '@/pages/Dashboard.vue';
+import NavBar from '@/components/Navbar/NavBar.vue';
 
 Vue.use(VueRouter);
 
@@ -19,6 +21,12 @@ const routes = [
     name: 'login',
     component: Login,
     meta: { title: 'Login' },
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    meta: { title: 'Dashboard', navBar: NavBar },
   },
   {
     path: '*',

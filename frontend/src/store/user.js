@@ -8,6 +8,7 @@ const state = {
 
 const getters = {
   getId: (state) => state.id,
+  getPermission: (state) => state.admin,
 };
 
 const actions = {
