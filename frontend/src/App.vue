@@ -1,6 +1,7 @@
 <template>
   <v-app id="app" style="width: 100%; height: 100%">
     <notifications />
+    <component :is="$route.meta.navBar"></component>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -24,6 +25,7 @@ html {
   margin: 0;
   width: 100%;
   min-height: 100vh;
+  overflow-y: auto !important;
 }
 #app {
   background-color: var(--v-background-base);

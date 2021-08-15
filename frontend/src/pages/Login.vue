@@ -13,7 +13,7 @@
       <v-divider horizontal></v-divider>
       <v-card-actions>
         <v-spacer />
-        <v-btn color="success" text>Skip</v-btn>
+        <v-btn color="success" text @click="$router.push('dashboard')">Skip</v-btn>
         <v-btn color="secondary" text :disabled="disabled" @click="saveTime">Save</v-btn>
       </v-card-actions>
     </v-card>
