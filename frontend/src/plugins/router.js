@@ -6,6 +6,7 @@ import Login from '@/pages/Login.vue';
 import NotFoundPage from '@/pages/404.vue';
 import Dashboard from '@/pages/Dashboard.vue';
 import NavBar from '@/components/Navbar/NavBar.vue';
+import Users from '@/pages/Users.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,12 @@ const routes = [
     name: 'dashboard',
     component: Dashboard,
     meta: { title: 'Dashboard', navBar: NavBar },
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: Users,
+    meta: { title: 'User Management', navBar: NavBar },
   },
   {
     path: '*',

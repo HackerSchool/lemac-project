@@ -63,12 +63,12 @@ export default {
           icon: 'mdi-view-dashboard',
           link: '/dashboard',
         },
-        // {
-        //   text: 'Locations',
-        //   icon: 'mdi-map-marker',
-        //   link: '/locations',
-        //   permission: 1, // admin only
-        // }
+        {
+          text: 'User Management',
+          icon: 'mdi-account-multiple',
+          link: '/users',
+          permission: 1,
+        },
       ],
     };
   },
@@ -87,7 +87,7 @@ export default {
     onLogout: function () {
       localStorage.removeItem('token');
       this.logoutUser();
-      this.$router.push('login');
+      this.$router.push('/');
     },
 
     ...mapActions('user', ['logoutUser']),
