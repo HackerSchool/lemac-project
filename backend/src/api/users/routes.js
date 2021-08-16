@@ -5,7 +5,7 @@ module.exports = {
   init: (app) => {
     app.post('/users', asyncHandler(addUser));
     app.get('/users', asyncHandler(getUsers));
-    app.put('/user/:id', asyncHandler(updateUser));
-    app.delete('/user/:id', asyncHandler(deleteUser));
+    app.put('/users/:id', asyncHandler(updateUser));
+    app.delete('/users/:id', asyncHandler(deleteUser));
   },
 };
