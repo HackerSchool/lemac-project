@@ -5,6 +5,7 @@ const express = require('express');
 
 const { dbMiddleware } = require('./middleware/database');
 const { errorHandler } = require('./middleware/requestHandler');
+const { verifyMiddleware } = require('./middleware/verifier');
 
 const api = require('./api');
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(dbMiddleware);
 app.use(errorHandler);
+app.use(verifyMiddleware);
 
 api.init(app);
 
