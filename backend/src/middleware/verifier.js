@@ -5,7 +5,7 @@ const verifyMiddleware = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const header = authHeader && authHeader.split(' ');
 
-  if (header || header.lenght != 2 || header[0] != 'Bearer') {
+  if (!header || header.length != 2 || header[0] != 'Bearer') {
     next();
     return;
   }
