@@ -49,6 +49,14 @@ const errorInterceptor = (error) => {
       router.push('login');
       break;
 
+    case 409:
+      Vue.notify({
+        type: 'warn',
+        title: 'Duplicate Entry',
+        text: 'The server rejected the request',
+      });
+      break;
+
     case 500:
       console.error(error.response.status, error.message);
       Vue.notify({
