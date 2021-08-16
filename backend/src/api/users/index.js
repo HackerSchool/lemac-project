@@ -15,7 +15,15 @@ module.exports = {
         res.status(409).send('duplicate entry');
         return;
       }
-      res.json(data);
+      const response = {
+        id: data.user_id,
+        istId: data.ist_id,
+        name: data.name,
+        active: data.active,
+        admin: data.admin,
+      };
+
+      res.json(response);
       return;
     }
     res.sendStatus(400);
@@ -34,7 +42,14 @@ module.exports = {
       res.sendStatus(204);
       return;
     } else if (data.length > 0) {
-      res.json(data);
+      const response = data.map((x) => ({
+        id: x.user_id,
+        istId: x.ist_id,
+        name: x.name,
+        active: x.active,
+        admin: x.admin,
+      }));
+      res.json(response);
       return;
     } else {
       //bad request
@@ -59,7 +74,15 @@ module.exports = {
         res.sendStatus(404);
         return;
       }
-      res.json(data);
+      const response = {
+        id: data.user_id,
+        istId: data.ist_id,
+        name: data.name,
+        active: data.active,
+        admin: data.admin,
+      };
+
+      res.json(response);
       return;
     }
     res.sendStatus(400);
