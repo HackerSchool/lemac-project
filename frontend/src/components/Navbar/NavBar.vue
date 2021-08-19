@@ -7,6 +7,13 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-spacer />
+      <v-progress-linear
+        :active="isLoading"
+        :indeterminate="isLoading"
+        absolute
+        bottom
+        color="primary"
+      ></v-progress-linear>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" clipped :permanent="$vuetify.breakpoint.lgAndUp" app>
       <v-list nav>
@@ -75,6 +82,7 @@ export default {
 
   computed: {
     ...mapGetters('user', ['getPermission']),
+    ...mapGetters(['isLoading']),
   },
 
   watch: {
