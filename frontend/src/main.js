@@ -7,6 +7,15 @@ import './plugins/notifications';
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$loading = {
+  show: function () {
+    store.dispatch('showLoadingBar');
+  },
+  hide: function () {
+    store.dispatch('hideLoadingBar');
+  },
+};
+
 new Vue({
   router,
   store,

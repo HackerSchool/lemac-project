@@ -1,8 +1,7 @@
 <template>
   <div>
-    <v-progress-linear v-if="loading" indeterminate />
-    <v-container class="mt-6">
-      <UsersTable v-if="!loading" :members="users" />
+    <v-container v-if="users" class="mt-6">
+      <UsersTable :members="users" />
     </v-container>
   </div>
 </template>
@@ -16,15 +15,14 @@ export default {
   components: { UsersTable },
   data() {
     return {
-      users: [],
-      loading: false,
+      users: null,
     };
   },
   async mounted() {
-    this.loading = true;
+    this.$loading.show();
     const response = await getUsers();
     this.users = response.data;
-    this.loading = false;
+    this.$loading.hide();
   },
 };
 </script>
