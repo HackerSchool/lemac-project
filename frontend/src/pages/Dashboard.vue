@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <div>Dashboard placeholder</div>
+</template>
 
 <script>
 export default {};

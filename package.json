@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "lemac-project",
   "version": "0.0.0",
   "description": "Hs project for lemac meant to control and keep track of the lab's usage",
   "private": true,
@@ -13,14 +13,10 @@
     "url": "git+https://github.com/HackerSchool/lemac-project.git"
   },
   "author": "HackerSchool",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/HackerSchool/lemac-project/issues"
   },
   "homepage": "https://github.com/HackerSchool/lemac-project#readme",
-  "dependencies": {
-    "@vue/cli": "^4.5.12"
-  },
   "devDependencies": {
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",

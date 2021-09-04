@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "lemac-frontend",
   "version": "0.0.0",
   "description": "Hs project for lemac meant to control and keep track of the lab's usage",
   "private": true,
@@ -32,7 +32,6 @@
     "url": "git+https://github.com/HackerSchool/lemac-project.git"
   },
   "author": "HackerSchool",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/HackerSchool/lemac-project/issues"
   },
