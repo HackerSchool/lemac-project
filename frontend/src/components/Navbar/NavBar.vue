@@ -71,6 +71,11 @@ export default {
           link: '/dashboard',
         },
         {
+          text: "Hours' Registry",
+          icon: 'mdi-clock',
+          link: '/hours',
+        },
+        {
           text: 'User Management',
           icon: 'mdi-account-multiple',
           link: '/users',

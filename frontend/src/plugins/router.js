@@ -7,6 +7,7 @@ import NotFoundPage from '@/pages/404.vue';
 import Dashboard from '@/pages/Dashboard.vue';
 import NavBar from '@/components/Navbar/NavBar.vue';
 import Users from '@/pages/Users.vue';
+import Hours from '@/pages/Hours.vue';
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,12 @@ const routes = [
     name: 'users',
     component: Users,
     meta: { title: 'User Management', navBar: NavBar },
+  },
+  {
+    path: '/hours',
+    name: 'hours',
+    component: Hours,
+    meta: { title: "Hours' Registry", navBar: NavBar },
   },
   {
     path: '*',
