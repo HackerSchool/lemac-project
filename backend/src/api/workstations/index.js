@@ -11,7 +11,7 @@ module.exports = {
     }
 
     //if the request body has proper structure inserts it db
-    if (req.body && req.body.name && types.find(req.body.workstationType)) {
+    if (req.body && req.body.name && types.find((x) => x === req.body.type)) {
       const data = await controller.addWorkstation(req.db, req.body);
       if (data === 'ER_DUP_ENTRY') {
         res.status(409).send('duplicate entry');
@@ -21,7 +21,7 @@ module.exports = {
         id: data.id,
         name: data.name,
         state: data.state,
-        workstationType: data.workstation_type,
+        type: data.type,
       };
 
       res.json(response);
@@ -41,7 +41,7 @@ module.exports = {
         id: x.id,
         name: x.name,
         state: x.state,
-        workstationType: x.workstation_type,
+        type: x.type,
       }));
       res.json(response);
       return;
@@ -56,7 +56,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.name && types.find(req.body.workstationType) && req.body.state) {
+    if (req.body && req.body.name && types.find((x) => x === req.body.type) && req.body.state) {
       const data = await controller.updateWorkstation(req.db, req.params.id, req.body);
       //duplicated entry
       if (data === 'ER_DUP_ENTRY') {
@@ -72,7 +72,7 @@ module.exports = {
         id: data.id,
         name: data.name,
         state: data.state,
-        workstationType: data.workstation_type,
+        type: data.type,
       };
 
       res.json(response);
