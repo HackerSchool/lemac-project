@@ -51,13 +51,13 @@ module.exports = {
     }
   },
 
-  updateUser: async (req, res) => {
+  updateWorkstation: async (req, res) => {
     if (!req.user || !req.user.admin) {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.istId && req.body.istId.match(/^ist\d+$/) && req.body.name) {
-      const data = await controller.updateUser(req.db, req.params.id, req.body);
+    if (req.body && req.body.name && types.find(req.body.workstationType) && req.body.state) {
+      const data = await controller.updateWorkstation(req.db, req.params.id, req.body);
       //duplicated entry
       if (data === 'ER_DUP_ENTRY') {
         res.status(409).send('duplicate entry');
@@ -69,11 +69,10 @@ module.exports = {
         return;
       }
       const response = {
-        id: data.user_id,
-        istId: data.ist_id,
+        id: data.id,
         name: data.name,
-        active: data.active,
-        admin: data.admin,
+        state: data.state,
+        workstationType: data.workstation_type,
       };
 
       res.json(response);
@@ -82,13 +81,13 @@ module.exports = {
     res.sendStatus(400);
   },
 
-  deleteUser: async (req, res) => {
+  deleteWorkstation: async (req, res) => {
     if (!req.user || !req.user.admin) {
       res.sendStatus(401);
       return;
     }
     try {
-      const conf = await controller.deleteUser(req.db, req.params.id);
+      const conf = await controller.deleteWorkstation(req.db, req.params.id);
       if (conf) {
         res.sendStatus(204);
         return;
