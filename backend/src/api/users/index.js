@@ -39,7 +39,7 @@ module.exports = {
     const data = await controller.getUsers(req.db);
     if (data.length === 0) {
       //no users in db
-      res.sendStatus(204);
+      res.json([]);
       return;
     } else if (data.length > 0) {
       const response = data.map((x) => ({
