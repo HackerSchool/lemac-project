@@ -8,6 +8,7 @@ import Dashboard from '@/pages/Dashboard.vue';
 import NavBar from '@/components/Navbar/NavBar.vue';
 import Users from '@/pages/Users.vue';
 import Hours from '@/pages/Hours.vue';
+import Workstations from '@/pages/Workstations.vue';
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,12 @@ const routes = [
     name: 'hours',
     component: Hours,
     meta: { title: "Hours' Registry", navBar: NavBar },
+  },
+  {
+    path: '/workstations',
+    name: 'workstations',
+    component: Workstations,
+    meta: { title: 'Workstations', navBar: NavBar },
   },
   {
     path: '*',

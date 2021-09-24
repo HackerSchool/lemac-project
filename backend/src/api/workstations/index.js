@@ -56,7 +56,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.name && types.find((x) => x === req.body.type) && req.body.state) {
+    if (req.body && req.body.name && types.find((x) => x === req.body.type)) {
       const data = await controller.updateWorkstation(req.db, req.params.id, req.body);
       //duplicated entry
       if (data === 'ER_DUP_ENTRY') {
