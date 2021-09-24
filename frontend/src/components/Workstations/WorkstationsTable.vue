@@ -1,14 +1,14 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="users"
+    :items="workstations"
     :search="search"
     sort-by="name"
     class="elevation-1"
   >
     <template #top>
       <v-toolbar flat>
-        <v-toolbar-title>Users</v-toolbar-title>
+        <v-toolbar-title>Workstations</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
           v-model="search"
@@ -19,7 +19,9 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="600px">
           <template #activator="{ on, attrs }">
-            <v-btn color="secondary" dark class="mb-2" v-bind="attrs" v-on="on"> New User </v-btn>
+            <v-btn color="secondary" dark class="mb-2" v-bind="attrs" v-on="on">
+              New Workstation
+            </v-btn>
           </template>
           <v-card>
             <v-form ref="form" lazy-validation @submit.prevent="save">
@@ -32,34 +34,18 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="editedItem.name"
-                        :rules="[(v) => !!v || 'User name is required']"
+                        :rules="[(v) => !!v || 'Workstation name is required']"
                         label="Name"
                         required
                         filled
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="editedItem.istId"
-                        :rules="[(v) => !!v || 'Ist Id is required']"
-                        label="Id"
+                    <v-col cols="12">
+                      <v-select
+                        v-model="editedItem.type"
+                        label="Type"
                         required
-                        filled
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-select
-                        v-model="editedItem.admin"
-                        label="Role"
-                        :items="roles"
-                        filled
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-select
-                        v-model="editedItem.active"
-                        label="State"
-                        :items="states"
+                        :items="types"
                         filled
                       ></v-select>
                     </v-col>
@@ -91,35 +77,34 @@
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
-    <template #[`item.admin`]="{ item }">
-      <v-chip :color="roleColors[item.admin]" dark class="capitalized">
-        {{ (roles.find((v) => v.value == item.admin) || {}).text }}
+    <template #[`item.state`]="{ item }">
+      <v-chip :color="stateColors[item.state]" dark class="capitalized">
+        {{ (states.find((v) => v.value == item.state) || {}).text }}
       </v-chip>
     </template>
-    <template #[`item.active`]="{ item }">
-      <v-chip :color="stateColors[item.active]" dark class="capitalized">
-        {{ (states.find((v) => v.value == item.active) || {}).text }}
+    <template #[`item.type`]="{ item }">
+      <v-chip :color="typeColors[item.type]" dark class="capitalized">
+        {{ (types.find((v) => v.value == item.type) || {}).text }}
       </v-chip>
     </template>
   </v-data-table>
 </template>
 
 <script>
-import { createUser, deleteUser, updateUser } from '@/api/user.api';
+import { createWorkstation, deleteWorkstation, updateWorkstation } from '@/api/workstations.api';
 
 export default {
-  name: 'UserTable',
+  name: 'WorkstationsTable',
   props: {
-    members: {
+    passedData: {
       type: Array,
       default() {
         return [
           {
             id: Number,
             name: String,
-            istId: String,
-            active: Number,
-            admin: Number,
+            state: Number,
+            type: String,
           },
         ];
       },
@@ -129,12 +114,11 @@ export default {
     dialog: false,
     dialogDelete: false,
     search: '',
-    users: [],
+    workstations: [],
     headers: [
-      { text: 'Member', value: 'name' },
-      { text: 'IST Id', value: 'istId' },
-      { text: 'Role', value: 'admin', filterable: false },
-      { text: 'State', value: 'active', filterable: false },
+      { text: 'Name', value: 'name' },
+      { text: 'State', value: 'state', filterable: false },
+      { text: 'Type', value: 'type', filterable: false },
       { text: 'Actions', value: 'actions', sortable: false, filterable: false },
     ],
     editedIndex: -1,
@@ -143,25 +127,28 @@ export default {
     },
     defaultItem: {
       name: '',
-      istId: '',
-      admin: '',
-      active: '',
+      type: '',
     },
-    roleColors: ['yellow darken-4', 'blue'],
-    stateColors: ['grey', 'green'],
-    roles: [
-      { text: 'Admin', value: 1 },
-      { text: 'User', value: 0 },
-    ],
+    stateColors: ['green', 'red'],
     states: [
-      { text: 'Active', value: 1 },
-      { text: 'Inactive', value: 0 },
+      { text: 'Occupied', value: 1 },
+      { text: 'Free', value: 0 },
     ],
+    types: [
+      { text: 'Active', value: 'active' },
+      { text: 'Disabled', value: 'disabled' },
+      { text: 'Remote', value: 'remote' },
+    ],
+    typeColors: {
+      active: 'yellow darken-2',
+      disabled: 'grey',
+      remote: 'cyan',
+    },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'New User' : 'Edit User';
+      return this.editedIndex === -1 ? 'New Workstation' : 'Edit Workstation';
     },
   },
 
@@ -175,28 +162,28 @@ export default {
   },
 
   mounted() {
-    this.users = this.members;
+    this.workstations = this.passedData;
   },
   methods: {
     editItem(item) {
-      this.editedIndex = this.users.indexOf(item);
+      this.editedIndex = this.workstations.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.users.indexOf(item);
+      this.editedIndex = this.workstations.indexOf(item);
       this.dialogDelete = true;
     },
 
     async deleteItemConfirm() {
       try {
-        await deleteUser(this.users[this.editedIndex].id);
-        const deleted = this.users.splice(this.editedIndex, 1);
+        await deleteWorkstation(this.workstations[this.editedIndex].id);
+        const deleted = this.workstations.splice(this.editedIndex, 1);
         this.$notify({
           type: 'success',
-          title: 'User deleted',
-          text: `You have deleted user ${deleted[0].name}`,
+          title: 'Workstation deleted',
+          text: `You have deleted Workstation ${deleted[0].name}`,
         });
         // eslint-disable-next-line no-empty
       } catch (e) {}
@@ -227,23 +214,26 @@ export default {
 
       if (this.editedIndex > -1) {
         try {
-          const response = await updateUser(this.users[this.editedIndex].id, this.editedItem);
-          this.users.splice(this.editedIndex, 1, response.data);
+          const response = await updateWorkstation(
+            this.workstations[this.editedIndex].id,
+            this.editedItem
+          );
+          this.workstations.splice(this.editedIndex, 1, response.data);
           this.$notify({
             type: 'success',
-            title: 'User updated',
-            text: `You have updated user ${response.data.name}`,
+            title: 'Workstation updated',
+            text: `You have updated Workstation ${response.data.name}`,
           });
           // eslint-disable-next-line no-empty
         } catch (e) {}
       } else {
         try {
-          const response = await createUser(this.editedItem);
-          this.users.push(response.data);
+          const response = await createWorkstation(this.editedItem);
+          this.workstations.push(response.data);
           this.$notify({
             type: 'success',
-            title: 'User created',
-            text: `You have created user ${response.data.name}`,
+            title: 'Workstation created',
+            text: `You have created Workstation ${response.data.name}`,
           });
           // eslint-disable-next-line no-empty
         } catch (e) {}

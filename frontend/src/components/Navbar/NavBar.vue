@@ -81,6 +81,12 @@ export default {
           link: '/users',
           permission: 1,
         },
+        {
+          text: 'Workstations',
+          icon: 'mdi-desktop-classic',
+          link: '/workstations',
+          permission: 1,
+        },
       ],
     };
   },
