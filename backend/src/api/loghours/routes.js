@@ -1,8 +1,9 @@
 const { asyncHandler } = require('../../middleware/requestHandler');
-const {} = require('./index');
+const {addEntryHours, addExitHours} = require('./index');
 
 module.exports = {
   init: (app) => {
-    app.post('/loghours', asyncHandler(/*inserir aqui a função para o post request*/));
+    app.post('/loghours', asyncHandler(addEntryHours));
+    app.post('/loghours', asyncHandler(addExitHours));
   },
 };
