@@ -1,0 +1,117 @@
+{
+  "name": "LEMAC Project",
+  "description": "The goal of this project is to create a web app for LEMAC to be able to register entries in their laboratory, while keeping a live track of availability of the workstations in a public website.",
+  "members": [
+    "Filipe Varela",
+    "Diogo Matos",
+    "Ana Martins",
+    "João Andrade"
+  ],
+  "project_manager": "Filipe Varela",
+  "motivation_links": [
+    "https://youtu.be/VfGW0Qiy2I0 (WebDev in a nutshell)",
+    "https://youtu.be/fBNz5xF-Kx4 (Node.js Crash Course)",
+    "https://youtu.be/L72fhGm1tfE (Express Crash Course)",
+    "https://youtu.be/9ylj9NR0Lcg (MySQL Crash Course)",
+    "https://youtu.be/Wy9q22isx3U (Vue Crash Course)",
+    "https://youtu.be/5lVQgZzLMHc (Vuex Crash Course -advanced vue)"
+  ],
+  "subjects": [
+    "WebDev",
+    "WebServer",
+    "OutSource"
+  ],
+  "etc": "1 semester",
+  "initial_observations": [
+    "This project is an outsorce project to LEMAC, as the name suggests",
+    "Initially we were a group of 4 members, not counting the PM, but at the start of this semester, the 4th group member left."
+  ],
+  "tasks": [
+    {
+      "name_task": "Create post route for log hours",
+      "status": "DOING",
+      "assignee": [
+        "João Andrade"
+      ]
+    },
+    {
+      "name_task": "Create route for getting sum of hours per member",
+      "assignee": [],
+      "status": "ONHOLD"
+    },
+    {
+      "name_task": "Do frontend Page for loghours",
+      "status": "TO DO",
+      "assignee": [
+        "Diogo Matos"
+      ]
+    },
+    {
+      "name_task": "Create get route getting log hours (all of them)",
+      "status": "TO DO",
+      "assignee": [
+        "Ana Martins"
+      ]
+    },
+    {
+      "name_task": "Create get route for getting personal log hours",
+      "status": "TO DO"
+    },
+    {
+      "name_task": "Create put route for updating hour logs",
+      "status": "TO DO"
+    },
+    {
+      "name_task": "Create delete route for loghours",
+      "status": "TO DO",
+      "assignee": [
+        "João Andrade"
+      ]
+    },
+    {
+      "name_task": "Create log hours API",
+      "status": "TO DO",
+      "assignee": [
+        "Diogo Matos"
+      ]
+    }
+  ],
+  "materials": [],
+  "sprints": [
+    {
+      "sprint_number": 0,
+      "description": "",
+      "intervale_date": "2021-09-25 - 2021-10-03",
+      "added": [],
+      "doing": [],
+      "done": [],
+      "onhold": [],
+      "deprecated": [],
+      "observations": []
+    },
+    {
+      "sprint_number": 1,
+      "description": "",
+      "intervale_date": "2021-10-04 - 2021-10-17",
+      "added": [
+        "Do frontend Page for loghours",
+        "Create get route getting log hours (all of them)",
+        "Create get route for getting personal log hours",
+        "Create put route for updating hour logs",
+        "Create delete route for loghours",
+        "Create log hours API"
+      ],
+      "doing": [
+        "Create post route for log hours"
+      ],
+      "done": [],
+      "onhold": [
+        "Create route for getting sum of hours per member"
+      ],
+      "deprecated": [],
+      "observations": [
+        "The progress on these tasks is on the sprint #2"
+      ]
+    }
+  ]
+}
