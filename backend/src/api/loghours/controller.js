@@ -1,5 +1,5 @@
 module.exports = {
-    addEntryHours: async (database, entryHours) => {
+    addHours: async (database, entryHours) => {
         
     }
 };
