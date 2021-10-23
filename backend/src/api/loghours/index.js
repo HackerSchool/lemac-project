@@ -52,4 +52,31 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  getIndividualHours: async (req, res) => {
+    //auth check
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
+
+    const data = await controller.getIndividualHours(req.db, req.user.user_id);
+    if (data.length === 0) {
+      //no hours in db
+      res.json([]);
+      return;
+    } else if (data.length > 0) {
+      const response = data.map((x) => ({
+        id: x.id,
+        userId: x.user_id,
+        entry: x.entry,
+        exit: x.exit,
+        time: x.time,
+      }));
+      res.json(response);
+      return;
+    } else {
+      //bad request
+      res.sendStatus(400);
+    }
+  },
 };
