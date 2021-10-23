@@ -39,7 +39,7 @@ module.exports = {
       return;
     } else if (data.length > 0) {
       const response = data.map((x) => ({
-        id: x.user_id,
+        id: x.id,
         userId: x.user_id,
         entry: x.entry,
         exit: x.exit,
