@@ -1,6 +1,16 @@
 const controller = require('./controller');
 
 module.exports = {
+  //Functions to convert data types between mysql and javascript json
+  timeJs2SQL: (jsTime) => {
+    const sqlTime = jsTime.replace('T', ' ').slice(0, -1);
+    return sqlTime;
+  },
+  timeSQL2Js: (sqlTime) => {
+    const jsTime = sqlTime.replace(' ', 'T').concat('Z');
+    return jsTime;
+  },
+
   verifiesUser: async (req, res) => {
     //verifies if the user exists and is authorized to do the operation
     if (!req.user || !req.user.admin) {
@@ -41,8 +51,8 @@ module.exports = {
       const response = data.map((x) => ({
         id: x.id,
         userId: x.user_id,
-        entry: x.entry,
-        exit: x.exit,
+        entry: this.timeSQL2Js(x.entry),
+        exit: this.timeSQL2Js(x.exit),
         time: x.time,
       }));
       res.json(response);
