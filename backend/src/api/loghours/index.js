@@ -89,4 +89,24 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+
+  deleteHours: async (req, res) => {
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
+    try {
+      const conf = await controller.deleteUser(req.db, req.params.id);
+      if (conf) {
+        res.sendStatus(204);
+        return;
+      } else {
+        res.sendStatus(404);
+        return;
+      }
+    } catch (e) {
+      res.sendStatus(400);
+      return;
+    }
+  },
 };
