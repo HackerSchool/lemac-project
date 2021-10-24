@@ -35,10 +35,11 @@ module.exports = {
     }
   },
 
-  deleteHours: async (database, id) => {
+  deleteHours: async (database, id, userId) => {
     try {
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id=?', [id]);
-      if (results.length === 0) return false;
+      //only user can delete its own hours
+      if (results.length === 0 || userId !== results[0].user_id) return false;
       await database.execute('DELETE FROM log_hours WHERE id = ?', [id]);
       return true;
     } catch (e) {

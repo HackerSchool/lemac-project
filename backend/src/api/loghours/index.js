@@ -66,7 +66,7 @@ module.exports = {
       return;
     }
 
-    const data = await controller.getIndividualHours(req.db, req.user.user_id);
+    const data = await controller.getIndividualHours(req.db, req.user.id);
     if (data.length === 0) {
       //no hours in db
       res.json([]);
@@ -88,12 +88,12 @@ module.exports = {
   },
 
   deleteHours: async (req, res) => {
-    if (!req.user || !req.user.admin) {
+    if (!req.user) {
       res.sendStatus(401);
       return;
     }
     try {
-      const conf = await controller.deleteUser(req.db, req.params.id);
+      const conf = await controller.deleteHours(req.db, req.params.id, req.user.id);
       if (conf) {
         res.sendStatus(204);
         return;
