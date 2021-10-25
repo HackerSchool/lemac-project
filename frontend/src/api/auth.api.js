@@ -2,6 +2,10 @@ import httpClient from './httpClient.api';
 
 const ENDPOINT = '/auth';
 
-const apiLogin = (code) =>
+export const apiLogin = (code) =>
   httpClient.get(`${ENDPOINT}/fenix?code=${encodeURIComponent(code)}`, { skipInterceptor: true });
-export default apiLogin;
+
+export const getProfile = async () => {
+  const response = await httpClient.get(`${ENDPOINT}/profile`);
+  return response.data;
+};
