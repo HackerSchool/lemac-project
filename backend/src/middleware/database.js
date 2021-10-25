@@ -7,6 +7,7 @@ const dbMiddleware = async (req, _res, next) => {
     user: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || '',
+    timezone: '+00:00',
   });
 
   await db.connect((err) => {

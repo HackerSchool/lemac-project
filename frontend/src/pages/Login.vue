@@ -22,6 +22,7 @@
 
 <script>
 import LoginTimePicker from '../components/Login/LoginTimePicker.vue';
+import { createHours } from '@/api/hours.api';
 export default {
   name: 'LoginPage',
   components: {
@@ -45,10 +46,22 @@ export default {
     setEnd(value) {
       this.end = value;
     },
-    saveTime() {
+    async saveTime() {
       const now = new Date().toJSON();
       const entry = now.slice(0, 11) + this.start + ':000Z';
       const exit = now.slice(0, 11) + this.end + ':000Z';
+      try {
+        await createHours({ entry: entry, exit: exit });
+        this.$notify({
+          type: 'success',
+          title: 'Hours saved',
+          text: `You have sucessfully saved your work hours for today`,
+        });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.$router.push('dashboard');
+      }
       console.log(entry);
       console.log(exit);
     },
