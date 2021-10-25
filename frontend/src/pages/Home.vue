@@ -6,7 +6,7 @@
 
 <script>
 import HomeHeader from '@/components/Home/HomeHeader.vue';
-import apiLogin from '@/api/auth.api';
+import { apiLogin } from '@/api/auth.api';
 import { mapActions } from 'vuex';
 export default {
   name: 'Home',
