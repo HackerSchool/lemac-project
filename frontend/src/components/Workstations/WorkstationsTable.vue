@@ -124,10 +124,11 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: '',
+      type: 'active',
     },
     defaultItem: {
       name: '',
-      type: '',
+      type: 'active',
     },
     stateColors: ['green', 'red'],
     states: [
