@@ -23,23 +23,87 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="editedItem.name"
-                        :rules="[(v) => !!v || 'User name is required']"
-                        label="Name"
-                        required
-                        filled
-                      ></v-text-field>
+                    <v-col cols="11" sm="5">
+                      <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :close-on-click="false"
+                        :nudge-right="40"
+                        :return-value.sync="editedItem.entry"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
+                      >
+                        <template #activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.entry"
+                            label="Entry Hours"
+                            prepend-icon="mdi-clock-time-four-outline"
+                            readonly
+                            required
+                            :rules="[() => !!editedItem.entry || 'This field is required']"
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-time-picker
+                          v-if="menu"
+                          v-model="editedItem.entry"
+                          :max="editedItem.exit"
+                          full-width
+                          format="24hr"
+                        >
+                          <v-spacer />
+                          <v-btn text color="success" @click="menu = false"> Cancel </v-btn>
+                          <v-btn text color="secondary" @click="$refs.menu.save(editedItem.entry)">
+                            OK
+                          </v-btn>
+                        </v-time-picker>
+                      </v-menu>
                     </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="editedItem.istId"
-                        :rules="[(v) => !!v || 'Ist Id is required']"
-                        label="Id"
-                        required
-                        filled
-                      ></v-text-field>
+                    <v-spacer></v-spacer>
+                    <!--Exit hours menu-->
+                    <v-col cols="11" sm="5">
+                      <v-menu
+                        ref="menu2"
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :close-on-click="false"
+                        :nudge-right="40"
+                        :return-value.sync="editedItem.exit"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
+                      >
+                        <template #activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="editedItem.exit"
+                            label="Exit Hours"
+                            prepend-icon="mdi-clock-time-four-outline"
+                            readonly
+                            required
+                            :rules="[() => !!editedItem.exit || 'This field is required']"
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-time-picker
+                          v-if="menu2"
+                          v-model="editedItem.exit"
+                          :min="editedItem.entry"
+                          full-width
+                          format="24hr"
+                        >
+                          <v-spacer />
+                          <v-btn text color="success" @click="menu2 = false"> Cancel </v-btn>
+                          <v-btn text color="secondary" @click="$refs.menu2.save(editedItem.exit)">
+                            OK
+                          </v-btn>
+                        </v-time-picker>
+                      </v-menu>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -121,8 +185,13 @@ export default {
       { text: 'Total Time', value: 'time', sortable: false },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
+    menu: false,
+    menu2: false,
     editedIndex: -1,
-    editedItem: {},
+    editedItem: {
+      entry: '',
+      exit: '',
+    },
     defaultItem: {
       entry: '',
       exit: '',
@@ -150,7 +219,19 @@ export default {
   methods: {
     editItem(item) {
       this.editedIndex = this.hours.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.editedItem = {
+        id: item.id,
+        userId: item.userId,
+        entry: new Date(item.entry).toLocaleTimeString(undefined, {
+          timeStyle: 'short',
+          timeZone: 'UTC',
+        }),
+        exit: new Date(item.exit).toLocaleTimeString(undefined, {
+          timeStyle: 'short',
+          timeZone: 'UTC',
+        }),
+      };
+      console.log(this.editedItem);
       this.dialog = true;
     },
 
@@ -194,6 +275,10 @@ export default {
     async save() {
       // Don't save if validation is unsuccessful
       if (!this.$refs.form.validate()) return;
+
+      const now = new Date().toJSON();
+      this.editedItem.entry = now.slice(0, 11) + this.editedItem.entry + ':000Z';
+      this.editedItem.exit = now.slice(0, 11) + this.editedItem.exit + ':000Z';
 
       if (this.editedIndex > -1) {
         try {
