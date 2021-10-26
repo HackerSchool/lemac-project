@@ -231,7 +231,6 @@ export default {
           timeZone: 'UTC',
         }),
       };
-      console.log(this.editedItem);
       this.dialog = true;
     },
 
