@@ -196,6 +196,7 @@ export default {
       entry: '',
       exit: '',
     },
+    day: '',
   }),
 
   computed: {
@@ -231,6 +232,7 @@ export default {
           timeZone: 'UTC',
         }),
       };
+      this.day = item.entry.slice(0, 11);
       this.dialog = true;
     },
 
@@ -260,6 +262,7 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.day = '';
       });
     },
 
@@ -268,6 +271,7 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
+        this.day = '';
       });
     },
 
@@ -275,12 +279,10 @@ export default {
       // Don't save if validation is unsuccessful
       if (!this.$refs.form.validate()) return;
 
-      const now = new Date().toJSON();
-      this.editedItem.entry = now.slice(0, 11) + this.editedItem.entry + ':000Z';
-      this.editedItem.exit = now.slice(0, 11) + this.editedItem.exit + ':000Z';
-
       if (this.editedIndex > -1) {
         try {
+          this.editedItem.entry = this.day + this.editedItem.entry + ':000Z';
+          this.editedItem.exit = this.day + this.editedItem.exit + ':000Z';
           const response = await updateHours(this.hours[this.editedIndex].id, this.editedItem);
           this.hours.splice(this.editedIndex, 1, response.data);
           this.$notify({
@@ -292,6 +294,9 @@ export default {
         } catch (e) {}
       } else {
         try {
+          const now = new Date().toJSON();
+          this.editedItem.entry = now.slice(0, 11) + this.editedItem.entry + ':000Z';
+          this.editedItem.exit = now.slice(0, 11) + this.editedItem.exit + ':000Z';
           const response = await createHours(this.editedItem);
           this.hours.push(response.data);
           this.$notify({
