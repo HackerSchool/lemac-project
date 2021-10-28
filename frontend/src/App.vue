@@ -40,4 +40,7 @@ html {
 #app {
   background-color: var(--v-background-base);
 }
+.theme--light.v-tabs-items {
+  background-color: #eef2f5;
+}
 </style>
