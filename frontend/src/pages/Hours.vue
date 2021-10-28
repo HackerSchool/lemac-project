@@ -1,22 +1,44 @@
 <template>
-  <div>
+  <div v-if="getPermission === 1">
+    <v-tabs grow>
+      <v-tab key="1">Personal Hours</v-tab>
+      <v-tab key="2">Calendar</v-tab>
+      <v-tab key="3">Hour Table</v-tab>
+      <v-tab-item>
+        <v-container v-if="hours">
+          <HourTable :prop-hours="hours" />
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container>
+          <Calendar />
+        </v-container>
+      </v-tab-item>
+    </v-tabs>
+  </div>
+
+  <div v-else>
     <v-container v-if="hours" class="mt-6">
       <HourTable :prop-hours="hours" />
     </v-container>
   </div>
-  <!-- TODO: tabs: if user is admin personal tab and all tab -->
 </template>
 
 <script>
 import HourTable from '@/components/Hours/HoursTable.vue';
+import Calendar from '@/components/Hours/Calendar.vue';
 import { getHoursSelf } from '@/api/hours.api';
+import { mapGetters } from 'vuex';
 export default {
   name: 'Hours',
-  components: { HourTable },
+  components: { HourTable, Calendar },
   data() {
     return {
       hours: null,
     };
+  },
+  computed: {
+    ...mapGetters('user', ['getPermission']),
   },
   async mounted() {
     this.$loading.show();
