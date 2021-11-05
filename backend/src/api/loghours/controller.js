@@ -14,10 +14,13 @@ module.exports = {
       return;
     }
   },
-  getHours: async (database) => {
+  getHours: async (database, month, year) => {
     try {
-      const [results] = await database.execute(
-        'SELECT l.*, u.name FROM log_hours l LEFT JOIN users u USING (user_id);'
+      const [
+        results,
+      ] = await database.execute(
+        'SELECT l.*, u.name FROM log_hours l LEFT JOIN users u USING (user_id) WHERE YEAR(l.entry)=? AND MONTH(l.entry)=?',
+        [year, month]
       );
       database.end();
       return results;

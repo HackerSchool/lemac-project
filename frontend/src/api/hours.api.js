@@ -1,7 +1,13 @@
 import httpClient from './httpClient.api';
 const ENDPOINT = '/loghours';
 
-export const getHours = () => httpClient.get(ENDPOINT);
+export const getHours = (month, year) =>
+  httpClient.get(ENDPOINT, {
+    params: {
+      month,
+      year,
+    },
+  });
 
 export const getHoursSelf = () => httpClient.get(`${ENDPOINT}/self`);
 
