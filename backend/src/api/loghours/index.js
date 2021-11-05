@@ -39,7 +39,7 @@ module.exports = {
       return;
     }
 
-    const data = await controller.getHours(req.db);
+    const data = await controller.getHours(req.db, req.query.month, req.query.year);
     if (data.length === 0) {
       //no hours in db
       res.json([]);

@@ -128,18 +128,18 @@ export default {
       nativeEvent.stopPropagation();
     },
     async updateRange({ start, end }) {
-      if (!this.requested.includes(start.month)) {
-        await this.pushEvents(start.month);
-        this.requested.push(start.month);
+      if (!this.requested.includes('' + start.month + start.year)) {
+        await this.pushEvents(start.month, start.year);
+        this.requested.push('' + start.month + start.year);
       }
-      if (!this.requested.includes(end.month)) {
-        await this.pushEvents(end.month);
-        this.requested.push(end.month);
+      if (!this.requested.includes('' + end.month + end.year)) {
+        await this.pushEvents(end.month, end.year);
+        this.requested.push('' + end.month + end.year);
       }
     },
-    async pushEvents(month) {
+    async pushEvents(month, year) {
       const events = [];
-      const allHours = (await getHours()).data;
+      const allHours = (await getHours(month, year)).data;
       //   const min = new Date(`${start.date}T00:00:00`);
       //   const max = new Date(`${end.date}T23:59:59`);
       for (let i = 0; i < allHours.length; i++) {
