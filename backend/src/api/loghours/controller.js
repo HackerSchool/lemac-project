@@ -16,7 +16,9 @@ module.exports = {
   },
   getHours: async (database) => {
     try {
-      const [results] = await database.execute('SELECT * FROM log_hours');
+      const [results] = await database.execute(
+        'SELECT l.*, u.name FROM log_hours l LEFT JOIN users u USING (user_id);'
+      );
       database.end();
       return results;
     } catch (e) {
