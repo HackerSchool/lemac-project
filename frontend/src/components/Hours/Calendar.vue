@@ -144,7 +144,7 @@ export default {
       //   const max = new Date(`${end.date}T23:59:59`);
       for (let i = 0; i < allHours.length; i++) {
         events.push({
-          name: allHours[i].userId.toString(),
+          name: allHours[i].user.name.split(' ')[0],
           start: new Date(allHours[i].entry),
           end: new Date(allHours[i].exit),
           color: this.colors[this.rnd(0, this.colors.length - 1)],

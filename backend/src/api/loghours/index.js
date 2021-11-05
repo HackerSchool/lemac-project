@@ -51,6 +51,9 @@ module.exports = {
         entry: x.entry,
         exit: x.exit,
         time: x.time,
+        user: {
+          name: x.name,
+        },
       }));
       res.json(response);
       return;
