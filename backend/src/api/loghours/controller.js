@@ -14,6 +14,21 @@ module.exports = {
       return;
     }
   },
+  getTime : async(database, hours) => {
+    try { //2021-10-23T05:30:00.000Z
+      timeIn = (console.log( hours.entry.charAt(11)*10 + hours.entry.charAt(12)) *60) + 
+        console.log( hours.entry.charAt(14)*10 + hours.entry.charAt(15));
+
+      timeOut = (console.log( hours.exit.charAt(11)*10 + hours.exit.charAt(12)) *60) + 
+        console.log( hours.exit.charAt(14)*10 + hours.exit.charAt(15));
+
+      time = timeOut - timeIn;
+      
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  },
   getHours: async (database, month, year) => {
     try {
       const [
@@ -39,7 +54,19 @@ module.exports = {
       return;
     }
   },
-
+  updateHours: async(database, hours, userId) => {
+    try {
+      await database.execute(
+        'UPDATE `log_users`(user_id, entry, `exit`, time) VALUES ( ? , ? , ? , ? )',
+        [userId, hours.entry, hours.exit, time]
+      );
+      const [results] = await database.execute('SELECT * FROM log_hours WHERE id= ?', [userId]);
+      database.end();
+      return results[0];
+    } catch (e) {
+      return e.code;
+    }
+  },
   deleteHours: async (database, id, userId) => {
     try {
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id=?', [id]);
