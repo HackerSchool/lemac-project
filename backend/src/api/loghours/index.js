@@ -62,6 +62,27 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  updateHours: async(req, res) => {
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
+    if (req.body && req.body.entry && req.body.exit) { //how to verifie that the hours exists in db
+      const data = await controller.updateHours(req.db, req.body, req.user.id);
+      
+      const response = {
+        id: data.id,
+        userId: data.user_id,
+        entry: data.entry,
+        exit: data.exit,
+        time: data.time,
+      };
+
+      res.json(response);
+      return;
+    }
+    res.sendStatus(400);
+  },
   getIndividualHours: async (req, res) => {
     //auth check
     if (!req.user) {
