@@ -12,14 +12,13 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body) {
+    if (req.body && req.body.entry && req.body.exit) {
       const body = {
         entry: timeJs2SQL(req.body.entry),
         exit: timeJs2SQL(req.body.exit),
       };
 
       const data = await controller.addHours(req.db, body, req.user.id);
-
       const response = {
         id: data.id,
         userId: data.user_id,
@@ -62,14 +61,22 @@ module.exports = {
       res.sendStatus(400);
     }
   },
-  updateHours: async(req, res) => {
-    if (!req.user || !req.user.admin) {
+  updateHours: async (req, res) => {
+    if (!req.user) {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.entry && req.body.exit) { //how to verifie that the hours exists in db
-      const data = await controller.updateHours(req.db, req.body, req.user.id);
-      
+    if (req.body && req.body.entry && req.body.exit) {
+      const body = {
+        entry: timeJs2SQL(req.body.entry),
+        exit: timeJs2SQL(req.body.exit),
+      };
+      //how to verifie that the hours exists in db
+      const data = await controller.updateHours(req.db, body, req.params.id, req.user.id);
+      if (!data) {
+        res.sendStatus(404);
+        return;
+      }
       const response = {
         id: data.id,
         userId: data.user_id,
