@@ -1,29 +1,26 @@
+const getTime = (entry, exit) => {
+  try {
+    //2021-10-23T05:30:00.000Z
+    const timeIn = parseInt(entry.slice(11, 13), 10) * 60 + parseInt(entry.slice(14, 16), 10);
+    const timeOut = parseInt(exit.slice(11, 13), 10) * 60 + parseInt(exit.slice(14, 16), 10);
+
+    return timeOut - timeIn;
+  } catch (e) {
+    console.error(e);
+    return;
+  }
+};
+
 module.exports = {
   addHours: async (database, hours, userId) => {
     try {
-      const time = 0;
       await database.execute(
         'INSERT INTO `log_hours` (user_id, entry, `exit`, time) VALUES ( ? , ? , ? , ? )',
-        [userId, hours.entry, hours.exit, time]
+        [userId, hours.entry, hours.exit, getTime(hours.entry, hours.exit)]
       );
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id=LAST_INSERT_ID()');
       database.end();
       return results[0];
-    } catch (e) {
-      console.error(e);
-      return;
-    }
-  },
-  getTime : async(database, hours) => {
-    try { //2021-10-23T05:30:00.000Z
-      timeIn = (console.log( hours.entry.charAt(11)*10 + hours.entry.charAt(12)) *60) + 
-        console.log( hours.entry.charAt(14)*10 + hours.entry.charAt(15));
-
-      timeOut = (console.log( hours.exit.charAt(11)*10 + hours.exit.charAt(12)) *60) + 
-        console.log( hours.exit.charAt(14)*10 + hours.exit.charAt(15));
-
-      time = timeOut - timeIn;
-      
     } catch (e) {
       console.error(e);
       return;
@@ -54,13 +51,17 @@ module.exports = {
       return;
     }
   },
-  updateHours: async(database, hours, userId) => {
+  updateHours: async (database, hours, id, userId) => {
     try {
-      await database.execute(
-        'UPDATE `log_users`(user_id, entry, `exit`, time) VALUES ( ? , ? , ? , ? )',
-        [userId, hours.entry, hours.exit, time]
-      );
-      const [results] = await database.execute('SELECT * FROM log_hours WHERE id= ?', [userId]);
+      const [check] = await database.execute('SELECT * FROM log_hours WHERE id=?', [id]);
+      if (check.length === 0 || userId !== check[0].user_id) return false;
+      await database.execute('UPDATE log_hours SET entry = ?, `exit` = ?, time = ? WHERE id = ?', [
+        hours.entry,
+        hours.exit,
+        getTime(hours.entry, hours.exit),
+        id,
+      ]);
+      const [results] = await database.execute('SELECT * FROM log_hours WHERE id= ?', [id]);
       database.end();
       return results[0];
     } catch (e) {
