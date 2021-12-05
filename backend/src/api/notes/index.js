@@ -21,6 +21,30 @@ module.exports = {
     res.sendStatus(400);
   },
 
+  getNotes: async (req, res) => {
+    if (!req.note) {
+      res.sendStatus(401);
+      return
+    }
+
+    const data = await controller.getNotes(req.db);
+    if (data.length === 0) {
+      res.json([]);
+      return;
+    } else if (data.length > 0) {
+      const response = data.map((x) => ({
+        id: data.id,
+        userId: data.user_id,
+        createdAt: data.created_at,
+        text: data.text,
+      }));
+      res.json(response);
+      return;
+    } else {
+      res.sendStatus(400);
+    }
+  },
+
   updateNotes: async (req, res) => {
     if (!req.user || !req.user.admin) {
       res.sendStatus(401);
@@ -49,5 +73,25 @@ module.exports = {
       return;
     }
     res.sendStatus(400);
+  },
+
+  deleteNote: async (req, res) => {
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
+    try {
+      const conf = await controller.deleteNote(req.db, req.params.id);
+      if (conf) {
+        res.sendStatus(204);
+        return;
+      } else {
+        res.sendStatus(404);
+        return;
+      }
+    } catch (e) {
+      res.sendStatus(400);
+      return;
+    }
   },
 };
