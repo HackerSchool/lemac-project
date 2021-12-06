@@ -54,13 +54,34 @@
           :activator="selectedElement"
           offset-x
         >
-          <v-card color="grey lighten-4" min-width="350px" flat>
+          <v-card v-if="selectedElement" color="grey lighten-4" min-width="350px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-toolbar-title>{{ selectedEvent.name }}</v-toolbar-title>
+              <v-toolbar-title v-if="selectedElement">{{
+                selectedEvent.details.user.name
+              }}</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
             <v-card-text>
-              <span>{{ selectedEvent.details }}</span>
+              <p>
+                Entry:
+                {{
+                  new Date(selectedEvent.details.entry).toLocaleString(undefined, {
+                    dateStyle: 'short',
+                    timeStyle: 'short',
+                    timeZone: 'UTC',
+                  })
+                }}
+              </p>
+              <p>
+                Exit:
+                {{
+                  new Date(selectedEvent.details.exit).toLocaleString(undefined, {
+                    dateStyle: 'short',
+                    timeStyle: 'short',
+                    timeZone: 'UTC',
+                  })
+                }}
+              </p>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
@@ -149,7 +170,7 @@ export default {
           end: new Date(allHours[i].exit),
           color: this.colors[this.rnd(0, this.colors.length - 1)],
           timed: true,
-          details: allHours[i].time,
+          details: allHours[i],
         });
       }
       this.events = events.concat(this.events);
