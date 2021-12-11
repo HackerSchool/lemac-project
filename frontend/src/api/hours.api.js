@@ -16,3 +16,5 @@ export const createHours = (data) => httpClient.post(ENDPOINT, data);
 export const updateHours = (id, data) => httpClient.put(`${ENDPOINT}/${id}`, data);
 
 export const deleteHours = (id) => httpClient.delete(`${ENDPOINT}/${id}`);
+
+export const getSumHours = () => httpClient.get(`${ENDPOINT}/sum`);

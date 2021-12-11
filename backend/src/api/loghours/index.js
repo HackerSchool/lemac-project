@@ -143,14 +143,14 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    const data = await controller.getSum();
+    const data = await controller.getSum(req.db);
     if (data.length === 0) {
       //no hours in db
       res.json([]);
       return;
     } else if (data.length > 0) {
       const response = data.map((x) => ({
-        userId: x.user_id,
+        id: x.user_id,
         name: x.name,
         time: x.time,
       }));
