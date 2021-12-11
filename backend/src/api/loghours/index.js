@@ -143,7 +143,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    const data = await controller.getSum(req.db);
+    const data = await controller.getSum(req.db, req.query.start, req.query.finish);
     if (data.length === 0) {
       //no hours in db
       res.json([]);
