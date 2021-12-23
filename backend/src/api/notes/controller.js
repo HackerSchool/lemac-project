@@ -1,12 +1,10 @@
-const { resolve } = require("upath");
-
 module.exports = {
   addNotes: async (database, notes, userId) => {
     try {
-      await database.execute(
-        'INSERT INTO `notes` (user_id, created_at, text) VALUES ( ? , ? , ? )',
-        [userId, notes.createdAt, notes.text]
-      );
+      await database.execute('INSERT INTO `notes` (user_id,  text) VALUES ( ? , ? )', [
+        userId,
+        notes.text,
+      ]);
       const [results] = await database.execute('SELECT * FROM notes WHERE id=LAST_INSERT_ID()');
       database.end();
       return results[0];
@@ -16,9 +14,10 @@ module.exports = {
     }
   },
 
-  getNotes: async(database) => {
-    try { //is missing showing last five
-      const [results] = await database.execute('SELECT * FROM notes');
+  getNotes: async (database) => {
+    try {
+      //is missing showing last five
+      const [results] = await database.execute('SELECT * FROM notes ORDER BY id DESC LIMIT 5');
       database.end();
       return results;
     } catch (e) {
@@ -27,14 +26,10 @@ module.exports = {
     }
   },
 
-  updateNotes: async (database, userId, notes) => {
+  updateNotes: async (database, id, notes) => {
     try {
-      await database.execute('UPDATE notes SET created_At = ?, text = ? WHERE user_id = ?', [
-        notes.createdAt,
-        notes.text,
-        userId,
-      ]);
-      const [results] = await database.execute('SELECT * FROM notes WHERE user_id = ?', [userId]);
+      await database.execute('UPDATE notes SET text = ? WHERE id = ?', [notes.text, id]);
+      const [results] = await database.execute('SELECT * FROM notes WHERE id = ?', [id]);
       database.end();
       return results[0];
     } catch (e) {
@@ -42,11 +37,11 @@ module.exports = {
     }
   },
 
-  deleteNote: async (database, userId) => {
+  deleteNote: async (database, id) => {
     try {
-      const [results] = await database.execute('SELECT * FROM notes WHERE user_id = ?', [userId]);
+      const [results] = await database.execute('SELECT * FROM notes WHERE id = ?', [id]);
       if (results.length === 0) return false;
-      await database.execute('DELETE FROM users WHERE user_id = ?', [userId]);
+      await database.execute('DELETE FROM users WHERE id = ?', [id]);
       return true;
     } catch (e) {
       console.error(e);

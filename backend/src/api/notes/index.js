@@ -6,7 +6,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body) {
+    if (req.body && req.body.text) {
       const data = await controller.addNotes(req.db, req.body, req.user.id);
 
       const response = {
@@ -22,9 +22,9 @@ module.exports = {
   },
 
   getNotes: async (req, res) => {
-    if (!req.note) {
+    if (!req.user) {
       res.sendStatus(401);
-      return
+      return;
     }
 
     const data = await controller.getNotes(req.db);
@@ -33,10 +33,10 @@ module.exports = {
       return;
     } else if (data.length > 0) {
       const response = data.map((x) => ({
-        id: data.id,
-        userId: data.user_id,
-        createdAt: data.created_at,
-        text: data.text,
+        id: x.id,
+        userId: x.user_id,
+        createdAt: x.created_at,
+        text: x.text,
       }));
       res.json(response);
       return;
@@ -50,7 +50,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.istId && req.body.istId.match(/^ist\d+$/) && req.body.name) {
+    if (req.body && req.body.text) {
       const data = await controller.updateNotes(req.db, req.params.id, req.body);
       //duplicated entry
       if (data === 'ER_DUP_ENTRY') {

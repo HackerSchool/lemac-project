@@ -6,6 +6,6 @@ module.exports = {
     app.post('/notes', asyncHandler(addNotes));
     app.put('/notes/:id', asyncHandler(updateNotes));
     app.get('/notes', asyncHandler(getNotes));
-    app.delete('/notes', asyncHandler(deleteNote));
+    app.delete('/notes/:id', asyncHandler(deleteNote));
   },
 };

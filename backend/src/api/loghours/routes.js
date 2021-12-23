@@ -1,5 +1,12 @@
 const { asyncHandler } = require('../../middleware/requestHandler');
-const { addHours, getHours, getIndividualHours, deleteHours, updateHours } = require('./index');
+const {
+  addHours,
+  getHours,
+  getIndividualHours,
+  deleteHours,
+  updateHours,
+  getSum,
+} = require('./index');
 
 module.exports = {
   init: (app) => {
@@ -8,5 +15,6 @@ module.exports = {
     app.get('/loghours/self', asyncHandler(getIndividualHours));
     app.put('/loghours/:id', asyncHandler(updateHours));
     app.delete('/loghours/:id', asyncHandler(deleteHours));
+    app.get('/loghours/sum', asyncHandler(getSum));
   },
 };
