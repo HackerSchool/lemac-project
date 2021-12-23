@@ -11,7 +11,12 @@ module.exports = {
     }
 
     //if the request body has proper structure inserts it db
-    if (req.body && req.body.name && types.find((x) => x === req.body.type)) {
+    if (
+      req.body &&
+      req.body.name &&
+      !!req.body.capacity &&
+      types.find((x) => x === req.body.type)
+    ) {
       const data = await controller.addWorkstation(req.db, req.body);
       if (data === 'ER_DUP_ENTRY') {
         res.status(409).send('duplicate entry');
@@ -20,8 +25,9 @@ module.exports = {
       const response = {
         id: data.id,
         name: data.name,
-        state: data.state,
+        capacity: data.capacity,
         type: data.type,
+        occupation: data.occupation,
       };
 
       res.json(response);
@@ -40,8 +46,9 @@ module.exports = {
       const response = data.map((x) => ({
         id: x.id,
         name: x.name,
-        state: x.state,
+        capacity: x.capacity,
         type: x.type,
+        occupation: x.occupation,
       }));
       res.json(response);
       return;
@@ -71,7 +78,8 @@ module.exports = {
       const response = {
         id: data.id,
         name: data.name,
-        state: data.state,
+        occupation: data.occupation,
+        capacity: data.capacity,
         type: data.type,
       };
 
