@@ -14,6 +14,11 @@
           <Calendar />
         </v-container>
       </v-tab-item>
+      <v-tab-item>
+        <v-container>
+          <SumTable />
+        </v-container>
+      </v-tab-item>
     </v-tabs>
   </div>
 
@@ -27,11 +32,12 @@
 <script>
 import HourTable from '@/components/Hours/HoursTable.vue';
 import Calendar from '@/components/Hours/Calendar.vue';
+import SumTable from '@/components/Hours/SumTable.vue';
 import { getHoursSelf } from '@/api/hours.api';
 import { mapGetters } from 'vuex';
 export default {
   name: 'Hours',
-  components: { HourTable, Calendar },
+  components: { HourTable, Calendar, SumTable },
   data() {
     return {
       hours: null,

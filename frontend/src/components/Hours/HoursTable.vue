@@ -147,7 +147,9 @@
         })
       }}
     </template>
-    <!-- TODO: time slot-->
+    <template #[`item.time`]="{ item }">
+      {{ Math.floor(parseInt(item.time) / 60) }}h{{ parseInt(item.time % 60) || '' }}
+    </template>
     <template #[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>

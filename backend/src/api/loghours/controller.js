@@ -80,10 +80,10 @@ module.exports = {
       console.error(e);
     }
   },
-  getSum: async (database) => {
+  getSum: async (database, start, finish) => {
     try {
       const [results] = await database.execute(
-        'SELECT l.user_id, SUM(l.time) as time, u.name FROM log_hours l LEFT JOIN users u USING (user_id) GROUP by user_id'
+        `SELECT l.user_id, SUM(l.time) as time, u.name FROM log_hours l LEFT JOIN users u USING (user_id) WHERE l.entry >= "${start} 00:00:00" AND l.entry < "${finish} 23:59:59" GROUP by user_id;`
       );
       database.end();
       return results;
