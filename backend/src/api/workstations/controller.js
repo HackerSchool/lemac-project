@@ -56,4 +56,32 @@ module.exports = {
       console.error(e);
     }
   },
+
+  checkWorkstation: async (database, workstationId) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
+        workstationId,
+      ]);
+      if (results.length === 0) return false;
+      if (results[0].occupation < results[0].capacity) return true;
+      else return false;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  changeOccupation: async (database, workstationId, change) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
+        workstationId,
+      ]);
+      await database.execute('UPDATE workstations SET occupation = ? WHERE id = ?', [
+        results[0].occupation + change,
+        workstationId,
+      ]);
+      database.end();
+    } catch (e) {
+      console.error(e);
+    }
+  },
 };
