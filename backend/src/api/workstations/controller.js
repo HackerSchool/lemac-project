@@ -2,10 +2,10 @@ module.exports = {
   addWorkstation: async (database, workstation) => {
     try {
       //inserts in db
-      await database.execute('INSERT INTO workstations (name, type) VALUES ( ? , ? )', [
-        workstation.name,
-        workstation.type,
-      ]);
+      await database.execute(
+        'INSERT INTO workstations (name, type, capacity) VALUES ( ? , ? , ? )',
+        [workstation.name, workstation.type, workstation.capacity]
+      );
       //gets inserted
       const [results] = await database.execute(
         'SELECT * FROM workstations WHERE id=LAST_INSERT_ID()'
@@ -30,12 +30,10 @@ module.exports = {
 
   updateWorkstation: async (database, workstationId, workstation) => {
     try {
-      await database.execute('UPDATE workstations SET name = ?, state = ?, type = ? WHERE id = ?', [
-        workstation.name,
-        workstation.state,
-        workstation.type,
-        workstationId,
-      ]);
+      await database.execute(
+        'UPDATE workstations SET name = ?, capacity = ?, type = ? WHERE id = ?',
+        [workstation.name, workstation.capacity, workstation.type, workstationId]
+      );
       const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
         workstationId,
       ]);

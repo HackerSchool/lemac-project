@@ -40,7 +40,16 @@
                         filled
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="6">
+                      <v-text-field
+                        v-model="editedItem.capacity"
+                        label="Capacity"
+                        type="number"
+                        required
+                        filled
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6">
                       <v-select
                         v-model="editedItem.type"
                         label="Type"
@@ -77,10 +86,8 @@
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
-    <template #[`item.state`]="{ item }">
-      <v-chip :color="stateColors[item.state]" dark class="capitalized">
-        {{ (states.find((v) => v.value == item.state) || {}).text }}
-      </v-chip>
+    <template #[`item.capacity`]="{ item }">
+      {{ `${item.occupation} / ${item.capacity}` }}
     </template>
     <template #[`item.type`]="{ item }">
       <v-chip :color="typeColors[item.type]" dark class="capitalized">
@@ -103,7 +110,8 @@ export default {
           {
             id: Number,
             name: String,
-            state: Number,
+            capacity: Number,
+            occupation: Number,
             type: String,
           },
         ];
@@ -117,7 +125,7 @@ export default {
     workstations: [],
     headers: [
       { text: 'Name', value: 'name' },
-      { text: 'State', value: 'state', filterable: false },
+      { text: 'Occupation/Capacity', value: 'capacity', filterable: false },
       { text: 'Type', value: 'type', filterable: false },
       { text: 'Actions', value: 'actions', sortable: false, filterable: false },
     ],
@@ -125,16 +133,13 @@ export default {
     editedItem: {
       name: '',
       type: 'active',
+      capacity: 0,
     },
     defaultItem: {
       name: '',
       type: 'active',
+      capacity: 0,
     },
-    stateColors: ['green', 'red'],
-    states: [
-      { text: 'Occupied', value: 1 },
-      { text: 'Free', value: 0 },
-    ],
     types: [
       { text: 'Active', value: 'active' },
       { text: 'Disabled', value: 'disabled' },
