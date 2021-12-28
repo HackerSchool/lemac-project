@@ -41,6 +41,52 @@ module.exports = {
       return;
     }
   },
+  updateEntrie: async (req, res) => {
+    //if (!req.user) {
+      //res.sendStatus(401);
+      //return;
+    //}
+    if (req.body && req.body.active == 1 && req.body.observations) {
+      const data = await controller.updateEntrieObservation(req.db, req.params.id, req.body.observations); //with observation
+      if (!data) {
+        res.sendStatus(404);
+        return;
+      }
+      const response = {
+        id: data.id,
+        workstationId: data.workstation_id,
+        istId: data.ist_id,
+        createdAt: data.created_at,
+        active: data.active,
+        observations: data.observations,
+      };
+  
+      res.json(response);
+      return;
+    }
+    else if (req.body && req.body.active == 0){
+      await getStatus(req.db, req.params.id);
+      const data = await controller.updateEntrie(req.db, req.params.id);
+      if (!data) {
+        res.sendStatus(404);
+        return;
+      }
+      const response = {
+        id: data.id,
+        workstationId: data.workstation_id,
+        istId: data.ist_id,
+        createdAt: data.created_at,
+        active: data.active,
+        observations: data.observations,
+      };
+  
+      res.json(response);
+      return;
+    }
+    else {
+      res.sendStatus(400);
+    }
+  },
   deleteEntrie: async (req, res) => {
     //if (!req.user) {
       //res.sendStatus(401);
