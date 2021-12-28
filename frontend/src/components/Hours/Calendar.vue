@@ -149,6 +149,7 @@ export default {
       nativeEvent.stopPropagation();
     },
     async updateRange({ start, end }) {
+      this.$loading.show();
       if (!this.requested.includes('' + start.month + start.year)) {
         await this.pushEvents(start.month, start.year);
         this.requested.push('' + start.month + start.year);
@@ -157,6 +158,7 @@ export default {
         await this.pushEvents(end.month, end.year);
         this.requested.push('' + end.month + end.year);
       }
+      this.$loading.hide();
     },
     async pushEvents(month, year) {
       const events = [];
