@@ -19,7 +19,6 @@ module.exports = {
         [userId, hours.entry, hours.exit, getTime(hours.entry, hours.exit)]
       );
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id=LAST_INSERT_ID()');
-      database.end();
       return results[0];
     } catch (e) {
       console.error(e);
@@ -34,7 +33,6 @@ module.exports = {
         'SELECT l.*, u.name FROM log_hours l LEFT JOIN users u USING (user_id) WHERE YEAR(l.entry)=? AND MONTH(l.entry)=?',
         [year, month]
       );
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -44,7 +42,6 @@ module.exports = {
   getIndividualHours: async (database, userId) => {
     try {
       const [results] = await database.execute('SELECT * FROM log_hours WHERE user_id=?', [userId]);
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -62,7 +59,6 @@ module.exports = {
         id,
       ]);
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id= ?', [id]);
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
@@ -74,7 +70,6 @@ module.exports = {
       //only user can delete its own hours
       if (results.length === 0 || userId !== results[0].user_id) return false;
       await database.execute('DELETE FROM log_hours WHERE id = ?', [id]);
-      database.end();
       return true;
     } catch (e) {
       console.error(e);
@@ -85,7 +80,6 @@ module.exports = {
       const [results] = await database.execute(
         `SELECT l.user_id, SUM(l.time) as time, u.name FROM log_hours l LEFT JOIN users u USING (user_id) WHERE l.entry >= "${start} 00:00:00" AND l.entry < "${finish} 23:59:59" GROUP by user_id;`
       );
-      database.end();
       return results;
     } catch (e) {
       console.error(e);

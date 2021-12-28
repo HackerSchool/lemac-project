@@ -10,7 +10,6 @@ module.exports = {
       const [results] = await database.execute(
         'SELECT * FROM workstations WHERE id=LAST_INSERT_ID()'
       );
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
@@ -20,7 +19,6 @@ module.exports = {
   getWorkstations: async (database) => {
     try {
       const [results] = await database.execute('SELECT * FROM workstations');
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -37,7 +35,6 @@ module.exports = {
       const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
         workstationId,
       ]);
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;

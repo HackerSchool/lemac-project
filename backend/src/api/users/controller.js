@@ -10,7 +10,6 @@ module.exports = {
       const [results] = await database.execute(
         'SELECT * FROM users WHERE user_id=LAST_INSERT_ID()'
       );
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
@@ -20,7 +19,6 @@ module.exports = {
   getUsers: async (database) => {
     try {
       const [results] = await database.execute('SELECT * FROM users');
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -35,7 +33,6 @@ module.exports = {
         [user.istId, user.name, user.active, user.admin, userId]
       );
       const [results] = await database.execute('SELECT * FROM users WHERE user_id = ?', [userId]);
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
