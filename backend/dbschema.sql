@@ -40,6 +40,14 @@ CREATE TABLE IF NOT EXISTS `notes` (
   `text` text
 );
 
+CREATE TABLE IF NOT EXISTS `publications` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `text` text,
+  `created_at` timestamp DEFAULT (now()),
+  `active` bool DEFAULT true
+);
+
 ALTER TABLE `log_hours` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL;
 
 ALTER TABLE `entries` ADD FOREIGN KEY (`workstation_id`) REFERENCES `workstations` (`id`) ON DELETE SET NULL;
