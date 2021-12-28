@@ -6,14 +6,14 @@ const getStatus = async (database, entrieId) => {
   if (data.active) {
     await workstationsController.changeOccupation(database, data.workstation_id, -1);
   }
-}
+};
 
 module.exports = {
   addEntries: async (req, res) => {
-    // if (!req.user) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
 
     if (
       req.body &&
@@ -87,10 +87,36 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  getEntries: async (req, res) => {
+    if (!req.user) {
+      res.sendStatus(401);
+       return;
+    }
+
+    const data = await controller.getEntries(req.db, req.query.active);
+    if (data.length === 0) {
+      //no entries in db
+      res.json([]);
+      return;
+    } else if (data.length > 0) {
+      const response = data.map((x) => ({
+        id: x.id,
+        workstationId: x.workstation_id,
+        istId: x.ist_id,
+        createdAt: x.created_at,
+        active: x.active,
+        observations: x.observations,
+      }));
+      res.json(response);
+      return;
+    } else {
+      res.sendStatus(400);
+    }
+  },
   deleteEntrie: async (req, res) => {
     //if (!req.user) {
-      //res.sendStatus(401);
-      //return;
+    //res.sendStatus(401);
+    //return;
     //}
     try {
       await getStatus(req.db, req.params.id);
@@ -105,5 +131,5 @@ module.exports = {
       res.sendStatus(400);
       return;
     }
-  }
+  },
 };
