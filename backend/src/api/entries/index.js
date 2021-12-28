@@ -1,6 +1,13 @@
 const controller = require('./controller');
 const workstationsController = require('../workstations/controller');
 
+const getStatus = async (database, entrieId) => {
+  const data = await controller.getEntrie(database, entrieId);
+  if (data.active) {
+    await workstationsController.changeOccupation(database, data.workstation_id, -1);
+  }
+};
+
 module.exports = {
   addEntries: async (req, res) => {
     if (!req.user) {
@@ -58,6 +65,25 @@ module.exports = {
       return;
     } else {
       res.sendStatus(400);
+    }
+  },
+  deleteEntrie: async (req, res) => {
+    //if (!req.user) {
+    //res.sendStatus(401);
+    //return;
+    //}
+    try {
+      await getStatus(req.db, req.params.id);
+      if (await controller.deleteEntrie(req.db, req.params.id)) {
+        res.sendStatus(204);
+        return;
+      } else {
+        res.sendStatus(404);
+        return;
+      }
+    } catch (e) {
+      res.sendStatus(400);
+      return;
     }
   },
 };
