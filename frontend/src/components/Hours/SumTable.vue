@@ -41,6 +41,7 @@ export default {
     ],
   }),
   async mounted() {
+    this.$loading.show();
     const date = new Date();
     date.setDate(date.getDate() - date.getDay());
     this.dates[0] = date.toISOString().slice(0, 10);
@@ -48,11 +49,14 @@ export default {
     this.dates[1] = date.toISOString().slice(0, 10);
     const response = await getSumHours(this.dates[0], this.dates[1]);
     this.hours = response.data;
+    this.$loading.hide();
   },
   methods: {
     async update() {
+      this.$loading.show();
       const response = await getSumHours(this.dates[0], this.dates[1]);
       this.hours = response.data;
+      this.$loading.hide();
     },
   },
 };
