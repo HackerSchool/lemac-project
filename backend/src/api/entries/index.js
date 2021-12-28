@@ -3,10 +3,10 @@ const workstationsController = require('../workstations/controller');
 
 module.exports = {
   addEntries: async (req, res) => {
-    // if (!req.user) {
-    //   res.sendStatus(401);
-    //   return;
-    // }
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
 
     if (
       req.body &&
@@ -32,6 +32,32 @@ module.exports = {
     } else {
       res.sendStatus(400);
       return;
+    }
+  },
+  getEntries: async (req, res) => {
+    // if (!req.user) {
+    //   res.sendStatus(401);
+    //   return;
+    // }
+
+    const data = await controller.getEntries(req.db, req.query.active);
+    if (data.length === 0) {
+      //no entries in db
+      res.json([]);
+      return;
+    } else if (data.length > 0) {
+      const response = data.map((x) => ({
+        id: x.id,
+        workstationId: x.workstation_id,
+        istId: x.ist_id,
+        createdAt: x.created_at,
+        active: x.active,
+        observations: x.observations,
+      }));
+      res.json(response);
+      return;
+    } else {
+      res.sendStatus(400);
     }
   },
 };
