@@ -79,6 +79,7 @@ module.exports = {
         results[0].occupation + change,
         workstationId,
       ]);
+      database.end();
     } catch (e) {
       console.error(e);
     }
