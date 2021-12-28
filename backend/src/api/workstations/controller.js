@@ -10,7 +10,6 @@ module.exports = {
       const [results] = await database.execute(
         'SELECT * FROM workstations WHERE id=LAST_INSERT_ID()'
       );
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
@@ -20,7 +19,6 @@ module.exports = {
   getWorkstations: async (database) => {
     try {
       const [results] = await database.execute('SELECT * FROM workstations');
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -37,7 +35,6 @@ module.exports = {
       const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
         workstationId,
       ]);
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
@@ -52,6 +49,33 @@ module.exports = {
       if (results.length === 0) return false;
       await database.execute('DELETE FROM workstations WHERE id = ?', [workstationId]);
       return true;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  checkWorkstation: async (database, workstationId) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
+        workstationId,
+      ]);
+      if (results.length === 0) return false;
+      if (results[0].occupation < results[0].capacity) return true;
+      else return false;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  changeOccupation: async (database, workstationId, change) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM workstations WHERE id = ?', [
+        workstationId,
+      ]);
+      await database.execute('UPDATE workstations SET occupation = ? WHERE id = ?', [
+        results[0].occupation + change,
+        workstationId,
+      ]);
     } catch (e) {
       console.error(e);
     }

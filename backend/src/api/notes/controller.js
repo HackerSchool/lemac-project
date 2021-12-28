@@ -6,7 +6,6 @@ module.exports = {
         notes.text,
       ]);
       const [results] = await database.execute('SELECT * FROM notes WHERE id=LAST_INSERT_ID()');
-      database.end();
       return results[0];
     } catch (e) {
       console.error(e);
@@ -18,7 +17,6 @@ module.exports = {
     try {
       //is missing showing last five
       const [results] = await database.execute('SELECT * FROM notes ORDER BY id DESC LIMIT 5');
-      database.end();
       return results;
     } catch (e) {
       console.error(e);
@@ -30,7 +28,6 @@ module.exports = {
     try {
       await database.execute('UPDATE notes SET text = ? WHERE id = ?', [notes.text, id]);
       const [results] = await database.execute('SELECT * FROM notes WHERE id = ?', [id]);
-      database.end();
       return results[0];
     } catch (e) {
       return e.code;
