@@ -14,6 +14,10 @@ const dbMiddleware = async (req, _res, next) => {
     if (err) throw err;
   });
   req.db = db;
+
+  //terminate db connection on end of request
+  _res.once('finish', () => db.end());
+
   next();
 };
 
