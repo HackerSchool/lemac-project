@@ -42,12 +42,16 @@ module.exports = {
     }
   },
   updateEntrie: async (req, res) => {
-    //if (!req.user) {
-      //res.sendStatus(401);
-      //return;
-    //}
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
     if (req.body && req.body.active == 1 && req.body.observations) {
-      const data = await controller.updateEntrieObservation(req.db, req.params.id, req.body.observations); //with observation
+      const data = await controller.updateEntrieObservation(
+        req.db,
+        req.params.id,
+        req.body.observations
+      ); //with observation
       if (!data) {
         res.sendStatus(404);
         return;
@@ -60,11 +64,10 @@ module.exports = {
         active: data.active,
         observations: data.observations,
       };
-  
+
       res.json(response);
       return;
-    }
-    else if (req.body && req.body.active == 0){
+    } else if (req.body && req.body.active == 0) {
       await getStatus(req.db, req.params.id);
       const data = await controller.updateEntrie(req.db, req.params.id);
       if (!data) {
@@ -79,18 +82,17 @@ module.exports = {
         active: data.active,
         observations: data.observations,
       };
-  
+
       res.json(response);
       return;
-    }
-    else {
+    } else {
       res.sendStatus(400);
     }
   },
   getEntries: async (req, res) => {
     if (!req.user) {
       res.sendStatus(401);
-       return;
+      return;
     }
 
     const data = await controller.getEntries(req.db, req.query.active);
@@ -114,10 +116,10 @@ module.exports = {
     }
   },
   deleteEntrie: async (req, res) => {
-    //if (!req.user) {
-    //res.sendStatus(401);
-    //return;
-    //}
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
     try {
       await getStatus(req.db, req.params.id);
       if (await controller.deleteEntrie(req.db, req.params.id)) {

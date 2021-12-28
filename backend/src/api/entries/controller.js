@@ -12,8 +12,9 @@ module.exports = {
       return;
     }
   },
-  updateEntrieObservation: async (database, entrieId, observation) => { //update observation only
-    try{
+  updateEntrieObservation: async (database, entrieId, observation) => {
+    //update observation only
+    try {
       await database.execute('UPDATE entries SET observations = ? WHERE id = ?', [
         observation,
         entrieId,
@@ -26,7 +27,7 @@ module.exports = {
   },
   updateEntrie: async (database, entrieId) => {
     try {
-      await database.execute('UPDATE entries SET active = 0 WHERE id = ?', [entrieId])
+      await database.execute('UPDATE entries SET active = 0 WHERE id = ?', [entrieId]);
       const [results] = await database.execute('SELECT * FROM entries WHERE id= ?', [entrieId]);
       return results[0];
     } catch (e) {
