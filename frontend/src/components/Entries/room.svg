@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440.19 409.01">
+  <defs>
+    <style>
+      .a {
+        fill: #ffefd3;
+      }
+
+      .a, .d, .e {
+        stroke: #ada495;
+        stroke-width: 0.75px;
+      }
+
+      .a, .d, .e, .f {
+        stroke-miterlimit: 10;
+      }
+
+      .b {
+        font-size: 18px;
+      }
+
+      .b, .g {
+        font-family: SourceSansPro-Regular, Source Sans Pro;
+      }
+
+      .c {
+        letter-spacing: -0.12em;
+      }
+
+      .d {
+        fill: #fe9900;
+      }
+
+      .e {
+        fill: #f3f3f3;
+      }
+
+      .f {
+        fill: #e5e5e5;
+        stroke: #a4a4a4;
+        stroke-width: 3px;
+      }
+
+      .g {
+        font-size: 50px;
+      }
+
+      .h {
+        letter-spacing: -0.01em;
+      }
+    </style>
+  </defs>
+  <title>LEMAC-planta</title>
+  <g>
+    <rect class="a" x="0.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(14.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 69</tspan></text>
+    <rect class="a" x="80.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(94.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 66</tspan></text>
+    <rect class="a" x="0.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(14.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 68</tspan></text>
+    <rect class="a" x="80.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(94.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 67</tspan></text>
+    <rect x="77.87" y="0.01" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="a" x="240.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(254.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 65</tspan></text>
+    <rect class="d" x="320.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(334.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 62</tspan></text>
+    <rect class="a" x="240.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(254.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 64</tspan></text>
+    <rect class="d" x="320.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(334.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 63</tspan></text>
+    <rect x="317.87" y="0.01" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="a" x="480.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(494.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 61</tspan></text>
+    <rect class="a" x="560.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(574.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 58</tspan></text>
+    <rect class="d" x="480.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(494.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 60</tspan></text>
+    <rect class="a" x="560.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(574.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 59</tspan></text>
+    <rect x="557.87" y="0.01" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="a" x="720.37" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(734.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 57</tspan></text>
+    <rect class="a" x="800.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(814.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 54</tspan></text>
+    <rect class="a" x="720.37" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(734.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 56</tspan></text>
+    <rect class="a" x="800.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(814.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 55</tspan></text>
+    <rect x="797.87" y="0.01" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="d" x="960.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(974.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 53</tspan></text>
+    <rect class="a" x="1040.38" y="0.51" width="79" height="67"/>
+    <text class="b" transform="translate(1054.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 50</tspan></text>
+    <rect class="d" x="960.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(974.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 52</tspan></text>
+    <rect class="a" x="1040.38" y="68.01" width="79" height="67"/>
+    <text class="b" transform="translate(1054.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 51</tspan></text>
+  </g>
+  <g>
+    <rect class="d" x="0.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(14.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 71</tspan></text>
+    <rect class="a" x="80.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(94.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 72</tspan></text>
+    <rect class="a" x="0.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(14.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 70</tspan></text>
+    <rect class="a" x="80.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(94.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 73</tspan></text>
+    <rect x="78.31" y="271.88" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="a" x="240.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(254.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 75</tspan></text>
+    <rect class="a" x="320.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(334.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 76</tspan></text>
+    <rect class="a" x="240.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(254.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 74</tspan></text>
+    <rect class="a" x="320.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(334.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 77</tspan></text>
+    <rect x="318.31" y="271.88" width="4" height="136"/>
+  </g>
+  <g>
+    <rect class="d" x="1280.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(1294.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 45</tspan></text>
+    <rect class="d" x="1360.81" y="272.38" width="79" height="67"/>
+    <text class="b" transform="translate(1374.05 312.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 43</tspan></text>
+    <rect class="d" x="1280.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(1293.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 46</tspan></text>
+    <rect class="d" x="1360.81" y="339.88" width="79" height="67"/>
+    <text class="b" transform="translate(1374.05 379.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 44</tspan></text>
+  </g>
+  <g>
+    <rect class="a" x="1279.81" y="0.38" width="79" height="67"/>
+    <text class="b" transform="translate(1293.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 49</tspan></text>
+    <rect class="a" x="1359.81" y="0.38" width="79" height="67"/>
+    <text class="b" transform="translate(1373.05 40.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 40</tspan></text>
+    <rect class="a" x="1279.81" y="67.88" width="79" height="67"/>
+    <text class="b" transform="translate(1293.05 107.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 48</tspan></text>
+    <rect class="e" x="1359.81" y="67.88" width="79" height="67"/>
+    <text class="b" transform="translate(1378.41 107.01)">R - 41</text>
+  </g>
+  <rect class="a" x="1279.87" y="135.01" width="79" height="67"/>
+  <text class="b" transform="translate(1293.05 175.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 47</tspan></text>
+  <rect class="a" x="1359.87" y="135.01" width="79" height="67"/>
+  <text class="b" transform="translate(1373.05 175.01)"><tspan class="c">L</tspan><tspan x="6.59" y="0">TI - 42</tspan></text>
+  <rect x="1197.38" y="0.01" width="4" height="204"/>
+  <rect x="1197.38" y="272.51" width="4" height="136"/>
+  <rect class="f" x="559.38" y="271.51" width="480" height="136"/>
+  <text class="g" transform="translate(717.74 354.75)">Moni<tspan class="h" x="103.1" y="0">t</tspan><tspan x="119.3" y="0">or</tspan></text>
+</svg>
