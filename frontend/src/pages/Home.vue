@@ -1,17 +1,22 @@
 <template>
   <div class="home">
     <HomeHeader :loading="loading" :loading-out="false" @login="login" @logout="logout" />
+    <v-container>
+      <RoomMap />
+    </v-container>
   </div>
 </template>
 
 <script>
 import HomeHeader from '@/components/Home/HomeHeader.vue';
+import RoomMap from '@/components/Home/RoomMap.vue';
 import { apiLogin } from '@/api/auth.api';
 import { mapActions } from 'vuex';
 export default {
   name: 'Home',
   components: {
     HomeHeader,
+    RoomMap,
   },
   data: () => ({
     loading: false,
