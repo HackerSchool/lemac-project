@@ -24,7 +24,7 @@ module.exports = {
     ) {
       const data = await controller.addEntries(req.db, req.body.istId, req.body.workstationId);
 
-      workstationsController.changeOccupation(req.db, req.body.workstationId, 1);
+      await workstationsController.changeOccupation(req.db, req.body.workstationId, 1);
 
       const response = {
         id: data.id,
