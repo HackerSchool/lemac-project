@@ -3,6 +3,7 @@ const users = require('./users/routes');
 const workstations = require('./workstations/routes');
 const loghours = require('./loghours/routes');
 const entries = require('./entries/routes');
+const publications = require('./publications/routes');
 
 module.exports = {
   /*export all routes into the main express file*/
@@ -12,5 +13,6 @@ module.exports = {
     workstations.init(app);
     loghours.init(app);
     entries.init(app);
+    publications.init(app);
   },
 };
