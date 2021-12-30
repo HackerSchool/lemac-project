@@ -16,10 +16,14 @@ module.exports = {
     // if active = 0 then all entries will be shown (there is no extra query), if = 1 only active entries will be shown
     try {
       if (active == 0) {
-        const [results] = await database.execute('SELECT * FROM entries');
+        const [results] = await database.execute(
+          'SELECT entries.*, workstations.name FROM entries LEFT JOIN workstations ON entries.workstation_id = workstations.id'
+        );
         return results;
       } else if (active == 1) {
-        const [results] = await database.execute('SELECT * FROM entries WHERE active = 1');
+        const [results] = await database.execute(
+          'SELECT entries.*, workstations.name FROM entries WHERE active = 1 LEFT JOIN workstations ON entries.workstation_id = workstations.id'
+        );
         return results;
       } else return;
     } catch (e) {
