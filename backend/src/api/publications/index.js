@@ -29,7 +29,7 @@ module.exports = {
       return;
     }
 
-    const data = await controller.getPublications(req.db);
+    const data = await controller.getPublications(req.db, req.query.active);
     if (data.length === 0) {
       res.json([]);
       return;
