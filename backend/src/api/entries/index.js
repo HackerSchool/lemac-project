@@ -42,10 +42,10 @@ module.exports = {
     }
   },
   getEntries: async (req, res) => {
-    if (!req.user) {
-      res.sendStatus(401);
-      return;
-    }
+    // if (!req.user) {
+    //   res.sendStatus(401);
+    //   return;
+    // }
 
     const data = await controller.getEntries(req.db, req.query.active);
     if (data.length === 0) {
@@ -60,6 +60,9 @@ module.exports = {
         createdAt: x.created_at,
         active: x.active,
         observations: x.observations,
+        workstations: {
+          name: x.name,
+        },
       }));
       res.json(response);
       return;
