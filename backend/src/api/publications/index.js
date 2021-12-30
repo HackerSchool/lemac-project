@@ -2,10 +2,10 @@ const controller = require('./controller');
 
 module.exports = {
   addPublication: async (req, res) => {
-    //if (!req.user || !req.user.admin) {
-      //res.sendStatus(401);
-      //return;
-    //}
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
     if (req.body && req.body.title && req.body.text) {
       const data = await controller.addPublication(req.db, req.body.title, req.body.text);
 
@@ -24,10 +24,10 @@ module.exports = {
     }
   },
   getPublications: async (req, res) => {
-    //if (!req.user) {
-      //res.sendStatus(401);
-      //return;
-    //}
+    if (!req.user) {
+      res.sendStatus(401);
+      return;
+    }
 
     const data = await controller.getPublications(req.db);
     if (data.length === 0) {
@@ -48,37 +48,28 @@ module.exports = {
     }
   },
   updatePublications: async (req, res) => {
-    //if (!req.user || !req.user.admin) {
-      //res.sendStatus(401);
-      //return;
-    //}
-    if (req.body.text || req.body.title) {
-      /*const data = await controller.updatePublications(req.db, req.params.id, req.body);
-      //no data found to update
+    if (!req.user || !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
+    if (req.body && req.body.text && req.body.title && req.body.active) {
+      const data = await controller.updatePublication(req.db, req.params.id, req.body);
       if (!data) {
         res.sendStatus(404);
         return;
-      }*/
-      await controller.updatePublication(req.db, req.params.id, req.body);
-      /*const response = {
+      }
+      console.log(data);
+      const response = {
         id: data.id,
         title: data.title,
         text: data.text,
         createdAt: data.created_at,
         active: data.active,
-      };*/
-      const response = {
-        id: req.body.id,
-        title: req.body.title,
-        text: req.body.text,
-        createdAt: req.body.created_at,
-        active: req.body.active,
       };
 
       res.json(response);
       return;
-    }
-    else {
+    } else {
       res.sendStatus(400);
     }
   },

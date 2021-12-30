@@ -15,7 +15,7 @@ module.exports = {
     }
   },
   getPublications: async (database) => {
-    try{
+    try {
       const [results] = await database.execute('SELECT * FROM publications');
       return results;
     } catch (e) {
@@ -25,9 +25,14 @@ module.exports = {
   },
   updatePublication: async (database, publicationId, publication) => {
     try {
-      await database.execute('UPDATE publications SET title = ?, text = ?, active = ? WHERE id = ?', [publication.title, publication.text, publication.active, publicationId]);
-      const results = await database.execute('SELECT * FROM publications WHERE id = ?', [publicationId]);
-      return results;
+      await database.execute(
+        'UPDATE publications SET title = ?, text = ?, active = ? WHERE id = ?',
+        [publication.title, publication.text, publication.active, publicationId]
+      );
+      const [results] = await database.execute('SELECT * FROM publications WHERE id = ?', [
+        publicationId,
+      ]);
+      return results[0];
     } catch (e) {
       return e.code;
     }
@@ -39,8 +44,7 @@ module.exports = {
       await database.execute('DELETE FROM publications WHERE id = ?', [id]);
       return true;
     } catch (e) {
-      console.error(e);
-      return;
+      throw e;
     }
   },
 };

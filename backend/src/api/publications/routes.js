@@ -1,5 +1,10 @@
 const { asyncHandler } = require('../../middleware/requestHandler');
-const { addPublication, deletePublication, updatePublications, getPublications } = require('./index');
+const {
+  addPublication,
+  deletePublication,
+  updatePublications,
+  getPublications,
+} = require('./index');
 
 module.exports = {
   init: (app) => {
