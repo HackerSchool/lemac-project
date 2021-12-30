@@ -14,10 +14,16 @@ module.exports = {
       return;
     }
   },
-  getPublications: async (database) => {
+  getPublications: async (database, active = 0) => {
+    // if active = 0 then all entries will be shown (there is no extra query), if = 1 only active entries will be shown
     try {
-      const [results] = await database.execute('SELECT * FROM publications');
-      return results;
+      if (active == 0) {
+        const [results] = await database.execute('SELECT * FROM publications');
+        return results;
+      } else if (active == 1) {
+        const [results] = await database.execute('SELECT * FROM publications WHERE active = 1');
+        return results;
+      }
     } catch (e) {
       console.error(e);
       return;
@@ -44,7 +50,7 @@ module.exports = {
       await database.execute('DELETE FROM publications WHERE id = ?', [id]);
       return true;
     } catch (e) {
-      throw e;
+      console.error(e);
     }
   },
 };
