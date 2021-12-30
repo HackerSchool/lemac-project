@@ -2,10 +2,10 @@ const controller = require('./controller');
 
 module.exports = {
   addPublication: async (req, res) => {
-    if (!req.user || !req.user.admin) {
-      res.sendStatus(401);
-      return;
-    }
+    //if (!req.user || !req.user.admin) {
+      //res.sendStatus(401);
+      //return;
+    //}
     if (req.body && req.body.title && req.body.text) {
       const data = await controller.addPublication(req.db, req.body.title, req.body.text);
 
@@ -21,6 +21,65 @@ module.exports = {
     } else {
       res.sendStatus(400);
       return;
+    }
+  },
+  getPublications: async (req, res) => {
+    //if (!req.user) {
+      //res.sendStatus(401);
+      //return;
+    //}
+
+    const data = await controller.getPublications(req.db);
+    if (data.length === 0) {
+      res.json([]);
+      return;
+    } else if (data.length > 0) {
+      const response = data.map((x) => ({
+        id: x.id,
+        title: x.title,
+        text: x.text,
+        createdAt: x.created_at,
+        active: x.active,
+      }));
+      res.json(response);
+      return;
+    } else {
+      res.sendStatus(400);
+    }
+  },
+  updatePublications: async (req, res) => {
+    //if (!req.user || !req.user.admin) {
+      //res.sendStatus(401);
+      //return;
+    //}
+    if (req.body.text || req.body.title) {
+      /*const data = await controller.updatePublications(req.db, req.params.id, req.body);
+      //no data found to update
+      if (!data) {
+        res.sendStatus(404);
+        return;
+      }*/
+      await controller.updatePublication(req.db, req.params.id, req.body);
+      /*const response = {
+        id: data.id,
+        title: data.title,
+        text: data.text,
+        createdAt: data.created_at,
+        active: data.active,
+      };*/
+      const response = {
+        id: req.body.id,
+        title: req.body.title,
+        text: req.body.text,
+        createdAt: req.body.created_at,
+        active: req.body.active,
+      };
+
+      res.json(response);
+      return;
+    }
+    else {
+      res.sendStatus(400);
     }
   },
   deletePublication: async (req, res) => {
