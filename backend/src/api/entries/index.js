@@ -108,6 +108,9 @@ module.exports = {
         createdAt: x.created_at,
         active: x.active,
         observations: x.observations,
+        workstations: {
+          name: x.name,
+        },
       }));
       res.json(response);
       return;
