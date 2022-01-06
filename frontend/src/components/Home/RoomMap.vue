@@ -146,7 +146,6 @@ export default {
   name: 'RoomMap',
   async mounted() {
     const { data } = await getWorkstations();
-    console.log(data);
     data.forEach((x) => {
       if (x.occupation > 0) {
         if (x.occupation == x.capacity) {
