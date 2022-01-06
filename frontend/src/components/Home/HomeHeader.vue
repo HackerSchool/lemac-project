@@ -15,7 +15,7 @@
       </v-btn>
     </div>
     <div v-else>
-      <v-tooltip bottom>
+      <v-tooltip bottom open-delay="500">
         <template #activator="{ on, attrs }">
           <v-icon v-bind="attrs" @click="$router.push('dashboard')" v-on="on">
             mdi-view-dashboard

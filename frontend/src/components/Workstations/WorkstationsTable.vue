@@ -148,7 +148,7 @@ export default {
     typeColors: {
       active: 'yellow darken-2',
       disabled: 'grey',
-      remote: 'cyan',
+      remote: 'blue',
     },
   }),
 
