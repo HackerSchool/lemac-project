@@ -44,7 +44,7 @@ module.exports = {
         return results;
       } else if (active == 1) {
         const [results] = await database.execute(
-          'SELECT entries.*, workstations.name FROM entries WHERE active = 1 LEFT JOIN workstations ON entries.workstation_id = workstations.id'
+          'SELECT entries.*, workstations.name FROM entries LEFT JOIN workstations ON entries.workstation_id = workstations.id  WHERE active = 1'
         );
         return results;
       } else return;
