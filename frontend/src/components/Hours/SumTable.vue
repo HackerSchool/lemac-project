@@ -54,6 +54,10 @@ export default {
   methods: {
     async update() {
       this.$loading.show();
+
+      //reverses the array if the first element selected was the end
+      if (new Date(this.dates[0]) > new Date(this.dates[1])) this.dates.reverse();
+
       const response = await getSumHours(this.dates[0], this.dates[1]);
       this.hours = response.data;
       this.$loading.hide();
