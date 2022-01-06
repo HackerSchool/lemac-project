@@ -1,7 +1,12 @@
 import httpClient from './httpClient.api';
 const ENDPOINT = '/entries';
 
-export const getEntries = () => httpClient.get(ENDPOINT);
+export const getEntries = (active = 0) =>
+  httpClient.get(ENDPOINT, {
+    params: {
+      active,
+    },
+  });
 
 export const addEntry = (data) => httpClient.post(ENDPOINT, data);
 

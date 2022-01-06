@@ -108,7 +108,7 @@ module.exports = {
         createdAt: x.created_at,
         active: x.active,
         observations: x.observations,
-        workstations: {
+        workstation: {
           name: x.name,
         },
       }));
