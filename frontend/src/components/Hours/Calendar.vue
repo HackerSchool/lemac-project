@@ -3,7 +3,7 @@
     <v-col>
       <v-sheet height="64">
         <v-toolbar flat>
-          <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday"> Today </v-btn>
+          <v-btn class="mr-4" color="secondary" @click="setToday"> Today </v-btn>
           <v-btn fab text small color="grey darken-2" @click="prev">
             <v-icon small> mdi-chevron-left </v-icon>
           </v-btn>
@@ -14,9 +14,9 @@
             {{ $refs.calendar.title }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-menu bottom right>
+          <v-menu bottom right offset-y>
             <template #activator="{ on, attrs }">
-              <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
+              <v-btn color="secondary" v-bind="attrs" v-on="on">
                 <span>{{ typeToLabel[type] }}</span>
                 <v-icon right> mdi-menu-down </v-icon>
               </v-btn>
@@ -54,7 +54,7 @@
           :activator="selectedElement"
           offset-x
         >
-          <v-card v-if="selectedElement" color="grey lighten-4" min-width="350px" flat>
+          <v-card v-if="selectedElement" color="grey lighten-4" min-width="250px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
               <v-toolbar-title v-if="selectedElement">{{
                 selectedEvent.details.user.name
@@ -82,11 +82,12 @@
                   })
                 }}
               </p>
+              <p>
+                Time: {{ Math.floor(parseInt(selectedEvent.details.time) / 60) }}h{{
+                  parseInt(selectedEvent.details.time % 60) || ''
+                }}
+              </p>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn text color="secondary" @click="selectedOpen = false"> Close </v-btn>
-            </v-card-actions>
           </v-card>
         </v-menu>
       </v-sheet>
