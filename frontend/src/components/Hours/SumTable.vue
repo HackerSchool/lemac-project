@@ -4,7 +4,7 @@
       <v-toolbar flat>
         <v-toolbar-title>Weekly Hours</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="400px">
+        <v-dialog v-model="dialog" max-width="450px">
           <template #activator="{ on, attrs }">
             <v-btn color="secondary" dark class="mb-2" v-bind="attrs" v-on="on">
               <v-icon>mdi-calendar</v-icon>
@@ -12,6 +12,7 @@
           </template>
           <v-date-picker
             v-model="dates"
+            class="py-3"
             range
             full-width
             no-title
