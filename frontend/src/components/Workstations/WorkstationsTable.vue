@@ -17,7 +17,7 @@
           hide-details
         ></v-text-field>
         <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="600px">
+        <v-dialog v-model="dialog" max-width="550px">
           <template #activator="{ on, attrs }">
             <v-btn color="secondary" dark class="mb-2" v-bind="attrs" v-on="on">
               New Workstation
@@ -29,37 +29,35 @@
                 <span class="headline">{{ formTitle }}</span>
               </v-card-title>
               <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="editedItem.name"
-                        :rules="[(v) => !!v || 'Workstation name is required']"
-                        label="Name"
-                        required
-                        filled
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-text-field
-                        v-model="editedItem.capacity"
-                        label="Capacity"
-                        type="number"
-                        required
-                        filled
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-select
-                        v-model="editedItem.type"
-                        label="Type"
-                        required
-                        :items="types"
-                        filled
-                      ></v-select>
-                    </v-col>
-                  </v-row>
-                </v-container>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="editedItem.name"
+                      :rules="[(v) => !!v || 'Workstation name is required']"
+                      label="Name"
+                      required
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="editedItem.capacity"
+                      label="Capacity"
+                      type="number"
+                      required
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-select
+                      v-model="editedItem.type"
+                      label="Type"
+                      required
+                      :items="types"
+                      filled
+                    ></v-select>
+                  </v-col>
+                </v-row>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
