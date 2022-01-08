@@ -189,10 +189,9 @@ export default {
           title: 'Workstation deleted',
           text: `You have deleted Workstation ${deleted[0].name}`,
         });
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
-
-      this.closeDelete();
+      } finally {
+        this.closeDelete();
+      }
     },
 
     close() {
@@ -215,9 +214,8 @@ export default {
     async save() {
       // Don't save if validation is unsuccessful
       if (!this.$refs.form.validate()) return;
-
-      if (this.editedIndex > -1) {
-        try {
+      try {
+        if (this.editedIndex > -1) {
           const response = await updateWorkstation(
             this.workstations[this.editedIndex].id,
             this.editedItem
@@ -228,10 +226,7 @@ export default {
             title: 'Workstation updated',
             text: `You have updated Workstation ${response.data.name}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
-      } else {
-        try {
+        } else {
           const response = await createWorkstation(this.editedItem);
           this.workstations.push(response.data);
           this.$notify({
@@ -239,10 +234,10 @@ export default {
             title: 'Workstation created',
             text: `You have created Workstation ${response.data.name}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
+        }
+      } finally {
+        this.close();
       }
-      this.close();
     },
   },
 };
