@@ -252,10 +252,9 @@ export default {
           title: 'Entry deleted',
           text: `You have deleted entry ${deleted[0].id}`,
         });
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
-
-      this.closeDelete();
+      } finally {
+        this.closeDelete();
+      }
     },
 
     close() {
@@ -280,9 +279,8 @@ export default {
     async save() {
       // Don't save if validation is unsuccessful
       if (!this.$refs.form.validate()) return;
-
-      if (this.editedIndex > -1) {
-        try {
+      try {
+        if (this.editedIndex > -1) {
           this.editedItem.entry = this.day + this.editedItem.entry + ':000Z';
           this.editedItem.exit = this.day + this.editedItem.exit + ':000Z';
           const response = await updateHours(this.hours[this.editedIndex].id, this.editedItem);
@@ -292,10 +290,7 @@ export default {
             title: 'Entry updated',
             text: `You have updated entry ${response.data.id}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
-      } else {
-        try {
+        } else {
           const now = new Date().toJSON();
           this.editedItem.entry = now.slice(0, 11) + this.editedItem.entry + ':000Z';
           this.editedItem.exit = now.slice(0, 11) + this.editedItem.exit + ':000Z';
@@ -306,10 +301,10 @@ export default {
             title: 'Entry created',
             text: `You have created entry ${response.data.id}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
+        }
+      } finally {
+        this.close();
       }
-      this.close();
     },
   },
 };

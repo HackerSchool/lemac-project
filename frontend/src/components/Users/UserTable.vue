@@ -40,7 +40,7 @@
                   <v-col cols="4">
                     <v-text-field
                       v-model="editedItem.istId"
-                      :rules="[(v) => !!v || 'Ist Id is required']"
+                      :rules="[(v) => !!v || 'IST Id is required']"
                       label="Id"
                       required
                       filled
@@ -196,10 +196,9 @@ export default {
           title: 'User deleted',
           text: `You have deleted user ${deleted[0].name}`,
         });
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
-
-      this.closeDelete();
+      } finally {
+        this.closeDelete();
+      }
     },
 
     close() {
@@ -222,9 +221,8 @@ export default {
     async save() {
       // Don't save if validation is unsuccessful
       if (!this.$refs.form.validate()) return;
-
-      if (this.editedIndex > -1) {
-        try {
+      try {
+        if (this.editedIndex > -1) {
           const response = await updateUser(this.users[this.editedIndex].id, this.editedItem);
           this.users.splice(this.editedIndex, 1, response.data);
           this.$notify({
@@ -232,10 +230,7 @@ export default {
             title: 'User updated',
             text: `You have updated user ${response.data.name}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
-      } else {
-        try {
+        } else {
           const response = await createUser(this.editedItem);
           this.users.push(response.data);
           this.$notify({
@@ -243,10 +238,10 @@ export default {
             title: 'User created',
             text: `You have created user ${response.data.name}`,
           });
-          // eslint-disable-next-line no-empty
-        } catch (e) {}
+        }
+      } finally {
+        this.close();
       }
-      this.close();
     },
   },
 };
