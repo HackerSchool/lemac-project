@@ -33,6 +33,9 @@ module.exports = {
         createdAt: data.created_at,
         active: data.active,
         observations: data.observations,
+        workstation: {
+          name: data.name,
+        },
       };
       res.json(response);
       return;
@@ -63,6 +66,9 @@ module.exports = {
         createdAt: data.created_at,
         active: data.active,
         observations: data.observations,
+        workstation: {
+          name: data.name,
+        },
       };
 
       res.json(response);
@@ -81,6 +87,9 @@ module.exports = {
         createdAt: data.created_at,
         active: data.active,
         observations: data.observations,
+        workstation: {
+          name: data.name,
+        },
       };
 
       res.json(response);
