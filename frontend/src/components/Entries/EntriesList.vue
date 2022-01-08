@@ -113,7 +113,13 @@
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
             <v-card-text>
-              <v-textarea v-model="editedItem.observations" filled clearable counter></v-textarea>
+              <v-textarea
+                v-model="editedItem.observations"
+                filled
+                clearable
+                counter
+                auto-grow
+              ></v-textarea>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
