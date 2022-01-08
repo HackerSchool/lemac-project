@@ -5,7 +5,11 @@ module.exports = {
         istId,
         workstationId,
       ]);
-      const [results] = await database.execute('SELECT * FROM `entries` WHERE id=LAST_INSERT_ID()');
+
+      const [results] = await database.execute(
+        'SELECT entries.*, workstations.name FROM entries LEFT JOIN workstations ON entries.workstation_id = workstations.id WHERE entries.id=LAST_INSERT_ID()'
+      );
+
       return results[0];
     } catch (e) {
       console.error(e);
@@ -19,7 +23,12 @@ module.exports = {
         observation,
         entrieId,
       ]);
-      const [results] = await database.execute('SELECT * FROM entries WHERE id= ?', [entrieId]);
+      const [
+        results,
+      ] = await database.execute(
+        'SELECT entries.*, workstations.name FROM entries LEFT JOIN workstations ON entries.workstation_id = workstations.id WHERE entries.id= ?',
+        [entrieId]
+      );
       return results[0];
     } catch (e) {
       console.error(e);
@@ -28,7 +37,12 @@ module.exports = {
   updateEntrie: async (database, entrieId) => {
     try {
       await database.execute('UPDATE entries SET active = 0 WHERE id = ?', [entrieId]);
-      const [results] = await database.execute('SELECT * FROM entries WHERE id= ?', [entrieId]);
+      const [
+        results,
+      ] = await database.execute(
+        'SELECT entries.*, workstations.name FROM entries LEFT JOIN workstations ON entries.workstation_id = workstations.id WHERE entries.id= ?',
+        [entrieId]
+      );
       return results[0];
     } catch (e) {
       console.error(e);
