@@ -9,6 +9,7 @@ import NavBar from '@/components/Navbar/NavBar.vue';
 import Users from '@/pages/Users.vue';
 import Hours from '@/pages/Hours.vue';
 import Workstations from '@/pages/Workstations.vue';
+import Publications from '@/pages/Publications.vue';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,12 @@ const routes = [
     name: 'workstations',
     component: Workstations,
     meta: { title: 'Workstations', navBar: NavBar },
+  },
+  {
+    path: '/publications',
+    name: 'publications',
+    component: Publications,
+    meta: { title: 'Announcements', navBar: NavBar },
   },
   {
     path: '*',

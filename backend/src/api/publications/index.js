@@ -58,7 +58,6 @@ module.exports = {
         res.sendStatus(404);
         return;
       }
-      console.log(data);
       const response = {
         id: data.id,
         title: data.title,

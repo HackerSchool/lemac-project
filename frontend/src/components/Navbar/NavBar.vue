@@ -87,6 +87,12 @@ export default {
           link: '/workstations',
           permission: 1,
         },
+        {
+          text: 'Announcements',
+          icon: 'mdi-bullhorn-variant',
+          link: '/publications',
+          permission: 1,
+        },
       ],
     };
   },
