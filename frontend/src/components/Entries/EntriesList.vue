@@ -266,7 +266,7 @@ export default {
     // add entry methods
     close() {
       this.dialogAdd = false;
-      this.$refs.formEdit.resetValidation();
+      this.$refs.formAdd.resetValidation();
       this.$nextTick(() => {
         this.newItem = {
           istId: '',
