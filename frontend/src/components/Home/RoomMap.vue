@@ -40,7 +40,7 @@
       <text class="b" transform="translate(94.05 40.01)">LTI - 66</text>
       <rect ref="LTI - 68" class="a" x="0.38" y="68.01" width="79" height="67" />
       <text class="b" transform="translate(14.05 107.01)">LTI - 68</text>
-      <rect ref="LTI - 67" class="a" x="80.38" y="68.01" width="79" height="67" />
+      <rect ref="LTI - 67" class="d" x="80.38" y="68.01" width="79" height="67" />
       <text class="b" transform="translate(94.05 107.01)">LTI - 67</text>
       <rect x="77.87" y="0.01" width="4" height="136" />
     </g>
@@ -51,7 +51,7 @@
       <text class="b" transform="translate(334.05 40.01)">LTI - 62</text>
       <rect ref="LTI - 64" class="a" x="240.38" y="68.01" width="79" height="67" />
       <text class="b" transform="translate(254.05 107.01)">LTI - 64</text>
-      <rect ref="LTI - 63" class="d" x="320.38" y="68.01" width="79" height="67" />
+      <rect ref="LTI - 63" class="a" x="320.38" y="68.01" width="79" height="67" />
       <text class="b" transform="translate(334.05 107.01)">LTI - 63</text>
       <rect x="317.87" y="0.01" width="4" height="136" />
     </g>
@@ -67,7 +67,7 @@
       <rect x="557.87" y="0.01" width="4" height="136" />
     </g>
     <g>
-      <rect ref="LTI - 57" class="a" x="720.37" y="0.51" width="79" height="67" />
+      <rect ref="LTI - 57" class="d" x="720.37" y="0.51" width="79" height="67" />
       <text class="b" transform="translate(734.05 40.01)">LTI - 57</text>
       <rect ref="LTI - 54" class="a" x="800.38" y="0.51" width="79" height="67" />
       <text class="b" transform="translate(814.05 40.01)">LTI - 54</text>
@@ -145,31 +145,50 @@ import { getWorkstations } from '@/api/workstations.api';
 export default {
   name: 'RoomMap',
   async mounted() {
-    const { data } = await getWorkstations();
-    data.forEach((x) => {
-      if (x.occupation > 0) {
-        if (x.occupation == x.capacity) {
-          this.$refs[x.name].classList.remove('a');
-          this.$refs[x.name].classList.remove('b');
-          this.$refs[x.name].classList.remove('e');
-          this.$refs[x.name].classList.add('active');
-        } else if (this.$refs[x.name].classList.contains('a')) {
-          this.$refs[x.name].classList.remove('a');
-          this.$refs[x.name].classList.add('a_part');
-        } else if (this.$refs[x.name].classList.contains('b')) {
-          this.$refs[x.name].classList.remove('b');
-          this.$refs[x.name].classList.add('b_part');
-        } else if (this.$refs[x.name].classList.contains('e')) {
-          this.$refs[x.name].classList.remove('e');
-          this.$refs[x.name].classList.add('e_part');
+    await this.update();
+    setInterval(this.update, 30000);
+  },
+  methods: {
+    async update() {
+      const { data } = await getWorkstations();
+      data.forEach((x) => {
+        if (x.occupation > 0) {
+          if (x.occupation == x.capacity) {
+            this.$refs[x.name].classList.add('active');
+          } else if (this.$refs[x.name].classList.contains('a')) {
+            this.$refs[x.name].classList.remove('a');
+            this.$refs[x.name].classList.add('a_part');
+          } else if (this.$refs[x.name].classList.contains('d')) {
+            this.$refs[x.name].classList.remove('d');
+            this.$refs[x.name].classList.add('b_part');
+          } else if (this.$refs[x.name].classList.contains('e')) {
+            this.$refs[x.name].classList.remove('e');
+            this.$refs[x.name].classList.add('e_part');
+          } else if (this.$refs[x.name].classList.contains('active')) {
+            this.$refs[x.name].classList.remove('active');
+          }
+        } else {
+          if (this.$refs[x.name].classList.contains('active')) {
+            this.$refs[x.name].classList.remove('active');
+          }
+          if (this.$refs[x.name].classList.contains('a_part')) {
+            this.$refs[x.name].classList.remove('a_part');
+            this.$refs[x.name].classList.add('a');
+          } else if (this.$refs[x.name].classList.contains('b_part')) {
+            this.$refs[x.name].classList.remove('b_part');
+            this.$refs[x.name].classList.add('d');
+          } else if (this.$refs[x.name].classList.contains('e_part')) {
+            this.$refs[x.name].classList.remove('e_part');
+            this.$refs[x.name].classList.add('e');
+          }
         }
-      }
-    });
+      });
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .a {
   fill: #ffefd3;
 }
