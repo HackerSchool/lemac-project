@@ -52,7 +52,7 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.text && req.body.title && req.body.active) {
+    if (req.body && req.body.text && req.body.title) {
       const data = await controller.updatePublication(req.db, req.params.id, req.body);
       if (!data) {
         res.sendStatus(404);
