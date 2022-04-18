@@ -31,7 +31,7 @@
               </v-card-title>
               <v-card-text>
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="10">
                     <v-text-field
                       v-model="editedItem.title"
                       :rules="[
@@ -43,6 +43,10 @@
                       counter="255"
                       filled
                     ></v-text-field>
+                  </v-col>
+                  <v-col cols="2" class="px-5">
+                    <!-- improve centering and design of switch-->
+                    <v-switch v-model="editedItem.active" inset></v-switch>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
@@ -141,10 +145,12 @@ export default {
     editedItem: {
       title: '',
       text: '',
+      active: 0,
     },
     defaultItem: {
       title: '',
       text: '',
+      active: 0,
     },
   }),
 
@@ -214,10 +220,10 @@ export default {
       if (!this.$refs.form.validate()) return;
       try {
         if (this.editedIndex > -1) {
-          const response = await updatePublications(
-            this.publications[this.editedIndex].id,
-            this.editedItem
-          );
+          const response = await updatePublications(this.publications[this.editedIndex].id, {
+            ...this.editedItem,
+            active: this.editedItem.active ? 1 : 0,
+          });
           this.publications.splice(this.editedIndex, 1, response.data);
           this.$notify({
             type: 'success',
