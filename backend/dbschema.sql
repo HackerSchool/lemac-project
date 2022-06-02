@@ -1,6 +1,4 @@
-START TRANSACTION;
-
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `user_id` int PRIMARY KEY AUTO_INCREMENT,
   `ist_id` varchar(12) UNIQUE NOT NULL,
   `name` varchar(255),
@@ -8,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin` bool DEFAULT false
 );
 
-CREATE TABLE IF NOT EXISTS `log_hours` (
+CREATE TABLE `log_hours` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
   `entry` datetime,
@@ -16,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `log_hours` (
   `time` int
 );
 
-CREATE TABLE IF NOT EXISTS `workstations` (
+CREATE TABLE `workstations` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `capacity` int DEFAULT 0,
@@ -24,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `workstations` (
   `type` ENUM ('active', 'disabled', 'remote')
 );
 
-CREATE TABLE IF NOT EXISTS `entries` (
+CREATE TABLE `entries` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `workstation_id` int,
   `ist_id` varchar(12),
@@ -33,14 +31,14 @@ CREATE TABLE IF NOT EXISTS `entries` (
   `observations` text
 );
 
-CREATE TABLE IF NOT EXISTS `notes` (
+CREATE TABLE `notes` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int,
   `created_at` timestamp DEFAULT (now()),
   `text` text
 );
 
-CREATE TABLE IF NOT EXISTS `publications` (
+CREATE TABLE `publications` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `text` text,
@@ -48,10 +46,13 @@ CREATE TABLE IF NOT EXISTS `publications` (
   `active` bool DEFAULT true
 );
 
+CREATE TABLE `cards` (
+  `card_id` int UNIQUE,
+  `ist_id` varchar(12) UNIQUE
+);
+
 ALTER TABLE `log_hours` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL;
 
 ALTER TABLE `entries` ADD FOREIGN KEY (`workstation_id`) REFERENCES `workstations` (`id`) ON DELETE SET NULL;
 
 ALTER TABLE `notes` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL;
-
-COMMIT;
