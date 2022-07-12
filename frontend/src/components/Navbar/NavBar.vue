@@ -93,6 +93,12 @@ export default {
           link: '/publications',
           permission: 1,
         },
+        {
+          text: 'Room Management',
+          icon: 'mdi-table-chair',
+          link: '/rooms',
+          permission: 1,
+        },
       ],
     };
   },

@@ -126,8 +126,8 @@
       <text class="b" transform="translate(1373.05 40.01)">LTI - 40</text>
       <rect ref="LTI - 48" class="a" x="1279.81" y="67.88" width="79" height="67" />
       <text class="b" transform="translate(1293.05 107.01)">LTI - 48</text>
-      <rect ref="R - 41" class="e" x="1359.81" y="67.88" width="79" height="67" />
-      <text class="b" transform="translate(1378.41 107.01)">R - 41</text>
+      <rect ref="LTI - 41" class="a" x="1359.81" y="67.88" width="79" height="67" />
+      <text class="b" transform="translate(1373.05 107.01)">LTI - 41</text>
     </g>
     <rect ref="LTI - 47" class="a" x="1279.87" y="135.01" width="79" height="67" />
     <text class="b" transform="translate(1293.05 175.01)">LTI - 47</text>
@@ -151,35 +151,38 @@ export default {
   methods: {
     async update() {
       const { data } = await getWorkstations();
+
       data.forEach((x) => {
-        if (x.occupation > 0) {
-          if (x.occupation == x.capacity) {
-            this.$refs[x.name].classList.add('active');
-          } else if (this.$refs[x.name].classList.contains('a')) {
-            this.$refs[x.name].classList.remove('a');
-            this.$refs[x.name].classList.add('a_part');
-          } else if (this.$refs[x.name].classList.contains('d')) {
-            this.$refs[x.name].classList.remove('d');
-            this.$refs[x.name].classList.add('b_part');
-          } else if (this.$refs[x.name].classList.contains('e')) {
-            this.$refs[x.name].classList.remove('e');
-            this.$refs[x.name].classList.add('e_part');
-          } else if (this.$refs[x.name].classList.contains('active')) {
-            this.$refs[x.name].classList.remove('active');
-          }
-        } else {
-          if (this.$refs[x.name].classList.contains('active')) {
-            this.$refs[x.name].classList.remove('active');
-          }
-          if (this.$refs[x.name].classList.contains('a_part')) {
-            this.$refs[x.name].classList.remove('a_part');
-            this.$refs[x.name].classList.add('a');
-          } else if (this.$refs[x.name].classList.contains('b_part')) {
-            this.$refs[x.name].classList.remove('b_part');
-            this.$refs[x.name].classList.add('d');
-          } else if (this.$refs[x.name].classList.contains('e_part')) {
-            this.$refs[x.name].classList.remove('e_part');
-            this.$refs[x.name].classList.add('e');
+        if (this.$refs[x.name]) {
+          if (x.occupation > 0) {
+            if (x.occupation == x.capacity) {
+              this.$refs[x.name].classList.add('active');
+            } else if (this.$refs[x.name].classList.contains('a')) {
+              this.$refs[x.name].classList.remove('a');
+              this.$refs[x.name].classList.add('a_part');
+            } else if (this.$refs[x.name].classList.contains('d')) {
+              this.$refs[x.name].classList.remove('d');
+              this.$refs[x.name].classList.add('b_part');
+            } else if (this.$refs[x.name].classList.contains('e')) {
+              this.$refs[x.name].classList.remove('e');
+              this.$refs[x.name].classList.add('e_part');
+            } else if (this.$refs[x.name].classList.contains('active')) {
+              this.$refs[x.name].classList.remove('active');
+            }
+          } else {
+            if (this.$refs[x.name].classList.contains('active')) {
+              this.$refs[x.name].classList.remove('active');
+            }
+            if (this.$refs[x.name].classList.contains('a_part')) {
+              this.$refs[x.name].classList.remove('a_part');
+              this.$refs[x.name].classList.add('a');
+            } else if (this.$refs[x.name].classList.contains('b_part')) {
+              this.$refs[x.name].classList.remove('b_part');
+              this.$refs[x.name].classList.add('d');
+            } else if (this.$refs[x.name].classList.contains('e_part')) {
+              this.$refs[x.name].classList.remove('e_part');
+              this.$refs[x.name].classList.add('e');
+            }
           }
         }
       });

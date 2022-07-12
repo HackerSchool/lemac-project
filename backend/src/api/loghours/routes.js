@@ -6,6 +6,7 @@ const {
   deleteHours,
   updateHours,
   getSum,
+  lastEntry,
 } = require('./index');
 
 module.exports = {
@@ -16,5 +17,6 @@ module.exports = {
     app.put('/loghours/:id', asyncHandler(updateHours));
     app.delete('/loghours/:id', asyncHandler(deleteHours));
     app.get('/loghours/sum', asyncHandler(getSum));
+    app.get('/loghours/lastEntry', asyncHandler(lastEntry));
   },
 };

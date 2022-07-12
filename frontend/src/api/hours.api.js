@@ -24,3 +24,5 @@ export const getSumHours = (start, finish) =>
       finish,
     },
   });
+
+export const getLastEntry = () => httpClient.get(`${ENDPOINT}/lastEntry`);

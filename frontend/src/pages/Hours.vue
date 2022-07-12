@@ -48,8 +48,14 @@ export default {
   },
   async mounted() {
     this.$loading.show();
-    const response = await getHoursSelf();
-    this.hours = response.data;
+    let response = await getHoursSelf();
+
+    let data = response.data.map((val) => {
+      val.sold_amount = val.exit_number - val.entry_number;
+      return val;
+    });
+
+    this.hours = data;
     this.$loading.hide();
   },
 };

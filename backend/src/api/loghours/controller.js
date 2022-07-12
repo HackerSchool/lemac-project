@@ -12,12 +12,21 @@ const getTime = (entry, exit) => {
 };
 
 module.exports = {
-  addHours: async (database, hours, userId) => {
+  addHours: async (database, hours, userId, entry_number, exit_number, safe_amount) => {
     try {
       await database.execute(
-        'INSERT INTO `log_hours` (user_id, entry, `exit`, time) VALUES ( ? , ? , ? , ? )',
-        [userId, hours.entry, hours.exit, getTime(hours.entry, hours.exit)]
+        'INSERT INTO `log_hours` (user_id, entry, `exit`, time, entry_number, exit_number, safe_amount) VALUES ( ? , ? , ? , ? , ? , ? , ? )',
+        [
+          userId,
+          hours.entry,
+          hours.exit,
+          getTime(hours.entry, hours.exit),
+          entry_number,
+          exit_number,
+          safe_amount,
+        ]
       );
+
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id=LAST_INSERT_ID()');
       return results[0];
     } catch (e) {
@@ -48,16 +57,22 @@ module.exports = {
       return;
     }
   },
-  updateHours: async (database, hours, id, userId) => {
+  updateHours: async (database, hours, id, userId, entry_number, exit_number, safe_amount) => {
     try {
       const [check] = await database.execute('SELECT * FROM log_hours WHERE id=?', [id]);
       if (check.length === 0 || userId !== check[0].user_id) return false;
-      await database.execute('UPDATE log_hours SET entry = ?, `exit` = ?, time = ? WHERE id = ?', [
-        hours.entry,
-        hours.exit,
-        getTime(hours.entry, hours.exit),
-        id,
-      ]);
+      await database.execute(
+        'UPDATE log_hours SET entry = ?, `exit` = ?, time = ?, entry_number = ?, exit_number = ?, safe_amount = ? WHERE id = ?',
+        [
+          hours.entry,
+          hours.exit,
+          getTime(hours.entry, hours.exit),
+          entry_number,
+          exit_number,
+          safe_amount,
+          id,
+        ]
+      );
       const [results] = await database.execute('SELECT * FROM log_hours WHERE id= ?', [id]);
       return results[0];
     } catch (e) {
@@ -81,6 +96,14 @@ module.exports = {
         `SELECT l.user_id, SUM(l.time) as time, u.name FROM log_hours l LEFT JOIN users u USING (user_id) WHERE l.entry >= "${start} 00:00:00" AND l.entry < "${finish} 23:59:59" GROUP by user_id;`
       );
       return results;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  lastEntry: async (database) => {
+    try {
+      const [results] = await database.execute('SELECT * FROM log_hours ORDER BY ID DESC LIMIT 1');
+      return results[0];
     } catch (e) {
       console.error(e);
     }

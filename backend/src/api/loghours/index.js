@@ -12,19 +12,36 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.entry && req.body.exit) {
+
+    if (
+      req.body &&
+      req.body.entry &&
+      req.body.exit &&
+      req.body.entry_number != null &&
+      req.body.safe_amount != null
+    ) {
       const body = {
         entry: timeJs2SQL(req.body.entry),
         exit: timeJs2SQL(req.body.exit),
       };
 
-      const data = await controller.addHours(req.db, body, req.user.id);
+      const data = await controller.addHours(
+        req.db,
+        body,
+        req.user.id,
+        req.body.entry_number,
+        req.body.exit_number,
+        req.body.safe_amount
+      );
       const response = {
         id: data.id,
         userId: data.user_id,
         entry: data.entry,
         exit: data.exit,
         time: data.time,
+        entry_number: data.entry_number,
+        exit_number: data.exit_number,
+        safe_amount: data.safe_amount,
       };
       res.json(response);
       return;
@@ -50,6 +67,9 @@ module.exports = {
         entry: x.entry,
         exit: x.exit,
         time: x.time,
+        entry_number: x.entry_number,
+        exit_number: x.exit_number,
+        safe_amount: x.safe_amount,
         user: {
           name: x.name,
         },
@@ -66,13 +86,28 @@ module.exports = {
       res.sendStatus(401);
       return;
     }
-    if (req.body && req.body.entry && req.body.exit) {
+
+    if (
+      req.body &&
+      req.body.entry &&
+      req.body.exit &&
+      req.body.entry_number != null &&
+      req.body.safe_amount != null
+    ) {
       const body = {
         entry: timeJs2SQL(req.body.entry),
         exit: timeJs2SQL(req.body.exit),
       };
       //how to verifie that the hours exists in db
-      const data = await controller.updateHours(req.db, body, req.params.id, req.user.id);
+      const data = await controller.updateHours(
+        req.db,
+        body,
+        req.params.id,
+        req.user.id,
+        req.body.entry_number,
+        req.body.exit_number,
+        req.body.safe_amount
+      );
       if (!data) {
         res.sendStatus(404);
         return;
@@ -83,6 +118,9 @@ module.exports = {
         entry: data.entry,
         exit: data.exit,
         time: data.time,
+        entry_number: data.entry_number,
+        exit_number: data.exit_number,
+        safe_amount: data.safe_amount,
       };
 
       res.json(response);
@@ -109,6 +147,9 @@ module.exports = {
         entry: x.entry,
         exit: x.exit,
         time: x.time,
+        entry_number: x.entry_number,
+        exit_number: x.exit_number,
+        safe_amount: x.safe_amount,
       }));
       res.json(response);
       return;
@@ -159,6 +200,25 @@ module.exports = {
     } else {
       //bad request
       res.sendStatus(400);
+    }
+  },
+
+  lastEntry: async (req, res) => {
+    if (!req.user && !req.user.admin) {
+      res.sendStatus(401);
+      return;
+    }
+    const data = await controller.lastEntry(req.db);
+    if (data) {
+      const response = {
+        id: data.user_id,
+        exit_number: data.exit_number,
+        safe_amount: data.safe_amount,
+      };
+      res.json(response);
+      return;
+    } else {
+      res.json([]);
     }
   },
 };
